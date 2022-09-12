@@ -41,12 +41,16 @@ class SlideSerializer(serializers.ModelSerializer):
 class HomeCardSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(use_url=True)
 
-    class Meta:
+    class Meta: 
         model = models.HomeCard
         exclude = ['id']
 
 
 class NewsletterEmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.NewsletterEmail
+        fields = '__all__'
+
     def validate_name(self, data):
         name = data
         for x in name.split(' ')[0:2]:
@@ -55,8 +59,3 @@ class NewsletterEmailSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError('Name is invalid')
         # Return just the first and second name capitalized
         return (" ").join(x.capitalize() for x in name.split(" ")[0:2])
-
-    class Meta:
-        model = models.NewsletterEmail
-        fields = '__all__'
-        validators = []  # Remove a default "unique together" constraint.
