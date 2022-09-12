@@ -1,3 +1,4 @@
+from django import template
 from . import views
 from django.urls import path
 from django.conf import settings
@@ -13,5 +14,5 @@ urlpatterns = [
     path('api/messages/', views.MessagesList.as_view()),
     path('api/slides/', views.SlidesList.as_view()),
     path('api/home-cards/', views.HomeCardList.as_view()),
-    path('api/validate-for-newsletter/', views.NewsletterEmailCreate.as_view()),
-] + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('api/validate-for-newsletter/', views.NewsletterEmailCreate.as_view(),),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

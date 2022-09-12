@@ -49,11 +49,12 @@ class HomeCardSerializer(serializers.ModelSerializer):
 class NewsletterEmailSerializer(serializers.ModelSerializer):
     def validate_name(self, data):
         name = data
-        for x in name.split(' '):
+        for x in name.split(' ')[0:2]:
             if not x.isalpha():
                 print(x)
                 raise serializers.ValidationError('Name is invalid')
-        return data
+        # Return just the first and second name capitalized
+        return (" ").join(x.capitalize() for x in name.split(" ")[0:2])
 
     class Meta:
         model = models.NewsletterEmail
