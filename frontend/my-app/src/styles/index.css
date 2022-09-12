@@ -187,7 +187,7 @@ nav {
 }
 
 .nav__menu__second {
-    height: 50vh;
+    height: 100%;
     background-color: #c10016;
     color: white;
     padding: 5rem 5rem 1rem 5rem;
@@ -232,6 +232,11 @@ nav {
     top: 0;
     left: -100vw;
     transition: 0.3s ease-in-out;
+    overflow: auto;
+}
+
+.nav__menu {
+    overflow-y: scroll;
 }
 
 .nav__submenu {
@@ -565,6 +570,102 @@ nav {
 
 /* End Contact */
 
+/* Begin Footer */
+.footer {
+    margin: 2rem 0;
+}
+
+.footer__topics {
+    display: flex;
+    flex: 1;
+    gap: 5rem;
+    justify-content: center;
+}
+
+.footer__topics h2 {
+    margin-bottom: 1rem;
+}
+
+.footer__topics p {
+    margin-bottom: 0.5rem;
+}
+
+.footer__topics p span {
+    font-size: 1.3rem;
+    width: 100%;
+    transition: 0.3s ease-in;
+}
+
+.footer__topics p span::after {
+    transition: all ease-in-out .2s;
+    background: red;
+    content: "";
+    display: block;
+    height: 2px;
+    width: 0;
+}
+
+.footer__topics p span:hover::after {
+    width: 10%;
+}
+
+.footer__utils {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.footer__utils__social_media {
+    display: flex;
+    gap: 5rem;
+    margin-bottom: 2rem;
+}
+
+.footer__utils__social_media i {
+    font-size: 2.5rem;
+    transition: 0.3s ease-in-out;
+}
+
+.footer__utils__social_media .facebook:hover {
+    color: #4267B2;
+}
+
+.footer__utils__social_media .instagram:hover {
+    color: #E1306C;
+}
+
+.footer__utils__social_media .twitter:hover {
+    color: #1DA1F2;
+}
+
+.footer__utils__social_media .pinterest:hover {
+    color: #E60023;
+}
+
+.footer__utils__download {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer__utils__download img {
+    width: 15rem;
+    filter: saturate(3);
+}
+
+.footer hr {
+    margin: 2rem 0;
+}
+
+.footer__copyright {
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+}
+
+/* End Footer */
+
 
 /* Above medium */
 @media screen and (max-width: 768px) {
@@ -630,6 +731,10 @@ nav {
     .contact {
         flex-direction: column;
     }
+
+    .footer__topics {
+        display: none;
+    }
 }
 
 /* large (desktop) */
@@ -656,6 +761,16 @@ nav {
         grid-template-columns: repeat(3, 1fr);
         justify-self: center;
         gap: 30px;
+    }
+
+    .footer__utils {
+        margin: 4rem 0 4rem 0;
+        flex-direction: row;
+        gap: 5rem;
+    }
+
+    .footer__utils__social_media {
+        margin-bottom: 0;
     }
 }
 

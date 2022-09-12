@@ -4,6 +4,7 @@ import Header from "./components/Header"
 import Carousel from "./components/Carousel"
 import HomeCards from "./components/HomeCards"
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 function App() {
     // Loading
@@ -84,6 +85,7 @@ function App() {
                 <section>
                     <Contact />
                 </section>
+                <Footer />
             </>
         )
     } else {

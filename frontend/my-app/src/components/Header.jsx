@@ -102,7 +102,7 @@ function Header(props) {
             {/* Submenus */}
             {submenus}
 
-            {/* Menu */}
+            {/* Menu for small screens */}
             <div className={showMenu ? "nav__menu show-menu" : "nav__menu"}>
                 <div className="nav__menu__container">
                     <div className='nav__menu__header'>
