@@ -77,12 +77,12 @@ function Product() {
     if (!isLoading) {
         function gender() {
             if (product.gender === 'W') {
-                return("Woman")
+                return ("Woman")
             }
             if (product.gender === 'M') {
                 return ("Men")
             }
-            return("Unissex")
+            return ("Unissex")
         }
         return (
             <>

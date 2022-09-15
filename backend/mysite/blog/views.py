@@ -79,7 +79,7 @@ class ProductList(APIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
-class ProductDetail(APIView):
+class ProductDetails(APIView):
     def get_object(self, pk):
         try:
             return models.Product.objects.get(pk=pk)

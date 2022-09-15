@@ -756,6 +756,7 @@ nav {
     transform: translateY(-15px);
     transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
     z-index: 2;
+    background-color: white;
 
 }
 

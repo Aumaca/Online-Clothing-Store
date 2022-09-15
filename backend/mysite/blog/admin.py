@@ -22,7 +22,7 @@ class SlideAdmin(admin.ModelAdmin):
     list_display = ('title', 'url', 'index')
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'gender')
+    list_display = ('name', 'price', 'gender', 'id')
 
 
 admin.site.register(models.Category, CategoryAdmin)

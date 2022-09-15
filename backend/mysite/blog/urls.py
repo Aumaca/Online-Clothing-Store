@@ -15,5 +15,5 @@ urlpatterns = [
     path('api/home-cards/', views.HomeCardList.as_view()),
     path('api/validate-for-newsletter/', views.NewsletterEmailCreate.as_view()),
     path('api/products/', views.ProductList.as_view()),
-    path('api/product-detail/<int:pk>', views.ProductDetail.as_view()),
+    path('api/product-details/<int:pk>', views.ProductDetails.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
