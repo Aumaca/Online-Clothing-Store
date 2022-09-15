@@ -93,6 +93,7 @@ class Product(models.Model):
     has_small = models.BooleanField()
     has_medium = models.BooleanField()
     has_large = models.BooleanField()
+    infant = models.BooleanField()
     gender = models.CharField(max_length=1, choices=(
         ("W", "Woman"),
         ("M", "Men"),
