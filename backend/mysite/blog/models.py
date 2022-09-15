@@ -82,3 +82,26 @@ class NewsletterEmail(models.Model):
 
     def __str__(self) -> str:
         return self.email
+
+
+class Product(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=256)
+    price = models.FloatField()
+    new_price = models.FloatField(blank=True, null=True)
+    type = models.ForeignKey(ProductType, on_delete=models.DO_NOTHING)
+    has_small = models.BooleanField()
+    has_medium = models.BooleanField()
+    has_large = models.BooleanField()
+    gender = models.CharField(max_length=1, choices=(
+        ("W", "Woman"),
+        ("M", "Men"),
+        ("U", "Unissex"),
+    ))
+    composition = models.TextField()
+    image1 = models.ImageField()
+    image2 = models.ImageField()
+    image3 = models.ImageField(blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.name

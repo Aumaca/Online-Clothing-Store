@@ -59,3 +59,9 @@ class NewsletterEmailSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError('Name is invalid')
         # Return just the first and second name capitalized
         return (" ").join(x.capitalize() for x in name.split(" ")[0:2])
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Product
+        fields = '__all__'

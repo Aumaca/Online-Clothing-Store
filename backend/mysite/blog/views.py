@@ -1,3 +1,4 @@
+from math import prod
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -68,4 +69,25 @@ class NewsletterEmailCreate(APIView):
         serializer.validate_name(data=request.data["name"])
         serializer.is_valid()
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)    
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class ProductList(APIView):
+    def get(self, request, format=None):
+        serializer = serializers.ProductSerializer(
+            models.Product.objects.all(), context={'request': request}, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class ProductDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return models.Product.objects.get(pk=pk)
+        except models.Product.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        product = self.get_object(pk)
+        serializer = serializers.ProductSerializer(
+            product, context={'request': request})
+        return Response(serializer.data, status.HTTP_200_OK)

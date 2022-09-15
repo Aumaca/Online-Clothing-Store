@@ -1,4 +1,3 @@
-from django import template
 from . import views
 from django.urls import path
 from django.conf import settings
@@ -14,5 +13,7 @@ urlpatterns = [
     path('api/messages/', views.MessagesList.as_view()),
     path('api/slides/', views.SlidesList.as_view()),
     path('api/home-cards/', views.HomeCardList.as_view()),
-    path('api/validate-for-newsletter/', views.NewsletterEmailCreate.as_view(),),
+    path('api/validate-for-newsletter/', views.NewsletterEmailCreate.as_view()),
+    path('api/products/', views.ProductList.as_view()),
+    path('api/product-detail/<int:pk>', views.ProductDetail.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
