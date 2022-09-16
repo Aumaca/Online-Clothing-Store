@@ -62,6 +62,11 @@ function Product() {
         };
     }
 
+    function selectSize(size) {
+        setSize(size);
+        toOpenDropdown();
+    }
+
     useEffect(() => {
         fetchMessages();
         fetchCategories();
@@ -92,24 +97,34 @@ function Product() {
                     <div className='product__overview'>
                         <div className="product__overview__images">
                             <img src={product.image1} alt="" />
-                            <img src={product.image2} alt="" />
                         </div>
-                        <div className="product__overview__info">
+                        <div className="product__overview__name__price">
                             <h1>{product.name}</h1>
                             <h1>U${product.price}</h1>
-                            <div className="dropdown">
-                                <button className="dropdown__button" onClick={() => toOpenDropdown()}><p>{size ? size : 'Select size'}</p><i class="fa-sharp fa-solid fa-caret-down"></i></button>
-                                <div className={openDropdown ? "dropdown__menu active" : "dropdown__menu"}>
-                                    <ul>
-                                        {product.has_small ? <li onClick={() => setSize('S')}>S</li> : ""}
-                                        {product.has_medium ? <li onClick={() => setSize('M')}>M</li> : ""}
-                                        {product.has_large ? <li onClick={() => setSize('L')}>L</li> : ""}
-                                    </ul>
-                                </div>
-                            </div>
-                            <button className="add__button">Add to bag</button>
+                        </div>
+                        <div className="product__overview__moreinfo">
+                            <h2 className='description__title'>Description</h2>
+                            <p>{product.description}</p>
+                            <h2 className='composition__title'>Composition</h2>
+                            <p>{product.composition}</p>
+                        </div>
+                        <div className="product__overview__moreimages">
+                            <img src={product.image2} alt="" />
                         </div>
                     </div>
+                </div>
+                <div className="buttons__small__devices__container">
+                    <div className="dropdown">
+                        <button className="dropdown__button" onClick={() => toOpenDropdown()}><p>{size ? size : 'Select size'}</p><i class="fa-sharp fa-solid fa-caret-down"></i></button>
+                        <div className={openDropdown ? "dropdown__menu active" : "dropdown__menu"}>
+                            <ul>
+                                {product.has_small ? <li onClick={() => selectSize('S')}>S</li> : ""}
+                                {product.has_medium ? <li onClick={() => selectSize('M')}>M</li> : ""}
+                                {product.has_large ? <li onClick={() => selectSize('L')}>L</li> : ""}
+                            </ul>
+                        </div>
+                    </div>
+                    <button className="add__button">Add to bag</button>
                 </div>
                 <Footer />
             </>

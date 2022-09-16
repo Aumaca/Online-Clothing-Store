@@ -99,6 +99,7 @@ class Product(models.Model):
         ("M", "Men"),
         ("U", "Unissex"),
     ))
+    description = models.TextField()
     composition = models.TextField()
     image1 = models.ImageField()
     image2 = models.ImageField()
