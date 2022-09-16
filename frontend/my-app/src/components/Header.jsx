@@ -4,6 +4,7 @@ import Messages from './Messages'
 import Category from './Category'
 
 import LogoRenner from '../images/cm_store.png'
+import e from 'cors';
 
 function Header(props) {
     // Messages
@@ -21,9 +22,27 @@ function Header(props) {
     // Search
     const [showSearch, setShowSearch] = useState(false);
 
+    // Login
+    const [loginValues, setLoginValues] = useState({
+        email_login: "",
+        password_login: "",
+    });
+    const [showLogin, setShowLogin] = useState(false);
+
+    // Register
+    const [registerValues, setRegisterValues] = useState({
+        email_register: "",
+        password_register: "",
+    });
+    const [showRegister, setShowRegister] = useState(false);
+
     // Submenus
     let submenus;
     let categories_with_submenus = [];
+
+    function handleChange(e) {
+        setLoginValues({ ...loginValues, [e.target.id]: e.target.value });
+    }
 
     function openSubmenu(index) { // function to be activated by category element
         setShowSubMenu(index);
@@ -68,7 +87,7 @@ function Header(props) {
                 {/* Menu icon and Search icon */}
                 <div className="nav__left__icons">
                     <ul>
-                        <li onClick={() => setShowMenu(true)}><i className="fa-solid fa-bars"></i></li>
+                        <li className='toggle__icon' onClick={() => setShowMenu(true)}><i className="fa-solid fa-bars"></i></li>
                         <li onClick={() => openSearchbox()}><i className="fa-solid fa-magnifying-glass"></i></li>
                     </ul>
                 </div>
@@ -84,10 +103,50 @@ function Header(props) {
                 <div className="nav__right__icons">
                     <ul>
                         <li><i className="fa-solid fa-bag-shopping"></i></li>
-                        <li><i className="fa-solid fa-user"></i></li>
+                        <li onClick={() => setShowLogin(true)} className='user-icon'><i className="fa-solid fa-user"></i></li>
+                        {/* To login */}
+                        <div className={`login__container ${showLogin ? "active" : ""}`}>
+                            <div className="login__header">
+                                <h1>LOGIN</h1>
+                                <i onClick={() => setShowLogin(false)} className="fa-solid fa-x close-login-icon"></i>
+                            </div>
+                            <form className="login__form" action=''>
+                                <div className="input__email">
+                                    <label>E-mail</label>
+                                    <input type="email" id='email_login' onChange={(e) => handleChange(e)} />
+                                </div>
+                                <div className="input__password">
+                                    <label>Password</label>
+                                    <input type="password" id='password_login' onChange={(e) => handleChange(e)} />
+                                </div>
+                                <a href="/"><p><u>I forgot my password</u></p></a>
+                                <button type='submit'>Login</button>
+                            </form>
+                            <div className='login__separator'><span>OR</span></div>
+                            <div className='register__container'>
+                                <button className='register__button'>Register</button>
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </nav>
+
+            {/* categories above nav */}
+            <div className="large__categories">
+                {categories.map((category) => {
+                    if (categories_with_submenus.includes(category)) {
+                        let index = categories_with_submenus.indexOf(category); // index is the index of the category in the array.
+                        return (
+                            <p key={category.id} onClick={() => openSubmenu(index)}>{category.name}</p>
+                        )
+                    } else {
+                        return (
+                            <p key={category.id}>{category.name}</p>
+                        )
+                    }
+                }
+                )}
+            </div>
 
             {/* Search */}
             <div className={showSearch ? "nav__searchbox show-searchbox" : "nav__searchbox"}>
@@ -143,7 +202,7 @@ function Header(props) {
                                 <p>Localization</p>
                             </a>
                         </div>
-                        
+
                         <div className="nav__link">
                             <a href="/about_us/">
                                 <i className="fa-solid fa-timeline"></i>

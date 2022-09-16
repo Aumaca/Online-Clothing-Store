@@ -109,8 +109,16 @@ nav {
     margin-right: 2rem;
 }
 
-.nav__right__icons ul li:not(:last-child) {
+.nav__right__icons ul li {
     margin-right: 2rem;
+}
+
+.nav__right__icons ul li.user-icon {
+    margin-right: 0;
+}
+
+.close-login-icon {
+    cursor: pointer;
 }
 
 /* === End nav === */
@@ -230,7 +238,7 @@ nav {
     background-color: white;
     position: fixed;
     top: 0;
-    left: -100vw;
+    left: -150vw;
     transition: 0.3s ease-in-out;
     overflow: auto;
 }
@@ -265,7 +273,119 @@ nav {
     color: red;
 }
 
+.large__categories {
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.large__categories p {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.categorie__hovermenu {
+    position: absolute;
+}
+
 /* === End nav menu === */
+
+/* === Login === */
+.login__container {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: white;
+    justify-content: center;
+}
+
+.login__container.active {
+    display: block;
+}
+
+.login__header {
+    background-color: #191919;
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.login__header h1,
+.login__header i {
+    margin-left: auto;
+}
+
+.login__form,
+.register__container {
+    display: flex;
+    flex-direction: column;
+    margin: 5rem;
+    gap: 5rem;
+}
+
+.input__email,
+.input__password {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+}
+
+.input__email input,
+.input__password input {
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 2px solid black;
+    outline: none;
+}
+
+.login__form p {
+    text-align: right;
+    font-size: 1.3rem;
+}
+
+.login__separator {
+    border-bottom: 1px solid black;
+    text-align: center;
+    height: 20px;
+}
+
+.login__separator span {
+    font-size: 30px;
+    background-color: white;
+    padding: 0 10px;
+}
+
+.login__container button,
+.register__button {
+    padding: 1rem;
+    background-color: #c10016;
+    color: white;
+    border: 1px solid #c10016;
+    cursor: pointer;
+    transition: 0.15s ease-in-out;
+}
+
+.login__container button:hover,
+.register__button:hover {
+    background-color: #77000e;
+}
+
+.register__container {
+    margin-top: 5rem;
+}
+
+.register__container button {
+    width: 100%;
+}
+
+/* === Login === */
 
 /* === Start news === */
 .carousel {
@@ -784,7 +904,7 @@ nav {
 .dropdown__menu ul li {
     padding: 1rem 0;
     cursor: pointer;
-    transition: 200ms ease-in-out;
+    transition: 0.2s ease-in-out;
 }
 
 .dropdown__menu ul li:hover {
@@ -894,6 +1014,10 @@ nav {
         display: none;
     }
 
+    .large__categories {
+        display: none;
+    }
+
     .buttons__small__devices__container.large {
         display: none;
     }
@@ -917,6 +1041,14 @@ nav {
     }
 
     /* End Scrollbar*/
+
+    .nav__submenu {
+        width: 300px;
+    }
+
+    .toggle__icon {
+        display: none;
+    }
 
     .homecards {
         display: grid;
