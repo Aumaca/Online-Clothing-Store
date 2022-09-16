@@ -72,7 +72,7 @@ function Header(props) {
                                         <p>{product.name}</p>
                                     </a>
                                 )
-                            })};
+                            })}
                         </div>
                     </div>
                 </div>
@@ -82,6 +82,29 @@ function Header(props) {
 
     return (
         <header>
+            {/* To login */}
+            <div className={`login__container ${showLogin ? "active" : ""}`}>
+                <div className="login__header">
+                    <h1>LOGIN</h1>
+                    <i onClick={() => setShowLogin(false)} className="fa-solid fa-x close-login-icon"></i>
+                </div>
+                <form className="login__form" action=''>
+                    <div className="input__email">
+                        <label>E-mail</label>
+                        <input type="email" id='email_login' onChange={(e) => handleChange(e)} />
+                    </div>
+                    <div className="input__password">
+                        <label>Password</label>
+                        <input type="password" id='password_login' onChange={(e) => handleChange(e)} />
+                    </div>
+                    <a href="/"><p><u>I forgot my password</u></p></a>
+                    <button type='submit'>Login</button>
+                </form>
+                <div className='login__separator'><span>OR</span></div>
+                <div className='register__container'>
+                    <button className='register__button'>Register</button>
+                </div>
+            </div>
             <Messages messages={messages} />
             <nav>
                 {/* Menu icon and Search icon */}
@@ -104,29 +127,6 @@ function Header(props) {
                     <ul>
                         <li><i className="fa-solid fa-bag-shopping"></i></li>
                         <li onClick={() => setShowLogin(true)} className='user-icon'><i className="fa-solid fa-user"></i></li>
-                        {/* To login */}
-                        <div className={`login__container ${showLogin ? "active" : ""}`}>
-                            <div className="login__header">
-                                <h1>LOGIN</h1>
-                                <i onClick={() => setShowLogin(false)} className="fa-solid fa-x close-login-icon"></i>
-                            </div>
-                            <form className="login__form" action=''>
-                                <div className="input__email">
-                                    <label>E-mail</label>
-                                    <input type="email" id='email_login' onChange={(e) => handleChange(e)} />
-                                </div>
-                                <div className="input__password">
-                                    <label>Password</label>
-                                    <input type="password" id='password_login' onChange={(e) => handleChange(e)} />
-                                </div>
-                                <a href="/"><p><u>I forgot my password</u></p></a>
-                                <button type='submit'>Login</button>
-                            </form>
-                            <div className='login__separator'><span>OR</span></div>
-                            <div className='register__container'>
-                                <button className='register__button'>Register</button>
-                            </div>
-                        </div>
                     </ul>
                 </div>
             </nav>

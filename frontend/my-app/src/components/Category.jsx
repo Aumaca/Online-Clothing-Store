@@ -17,7 +17,7 @@ function Category(props) {
                 <p>{category.name}</p>
             </a>
         )
-    };
+    }
 };
 
 export default Category
