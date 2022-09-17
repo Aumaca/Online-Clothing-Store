@@ -75,6 +75,10 @@ TEMPLATES = [
     },
 ]
 
+# Override the default user model
+# https://docs.djangoproject.com/en/dev/topics/auth/customizing/#auth-custom-user
+AUTH_USER_MODEL = 'blog.Account'
+
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
@@ -132,4 +136,3 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
