@@ -292,18 +292,34 @@ nav {
 /* === End nav menu === */
 
 /* === Login === */
-.login__container {
-    position: absolute;
-    display: none;
-    width: 100%;
+.login__background {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(25, 25, 25, 0.75);
+    width: 100vw;
     height: 100vh;
-    top: 0;
-    background-color: white;
-    margin: 0;
+    display: none;
 }
 
-.login__container.active {
-    display: block;
+.login__background.active {
+    display: flex;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    height: 100vh;
+}
+
+.login__container {
+    top: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
 }
 
 .login__header {
@@ -1051,9 +1067,19 @@ nav {
         display: none;
     }
 
+    .login {
+        height: 100%;
+    }
+
+    .login__container {
+        height: auto;
+        width: 35%;
+        top: 8%;
+    }
+
     .login__form,
     .register__container {
-        width: 40vw;
+        width: 30vw;
     }
 
     .homecards {
