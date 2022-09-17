@@ -99,7 +99,7 @@ function Header(props) {
                                 <label>Password</label>
                                 <input type="password" id='password_login' onChange={(e) => handleChange(e)} />
                             </div>
-                            <a href="/"><p><u>I forgot my password</u></p></a>
+                            <p><a href="/"><u>I forgot my password</u></a></p>
                             <button type='submit'>Login</button>
                         </form>
                         <div className='login__separator'><span>OR</span></div>
