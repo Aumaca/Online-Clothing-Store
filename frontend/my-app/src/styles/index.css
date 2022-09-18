@@ -319,7 +319,6 @@ nav {
     justify-content: center;
     align-items: center;
     background-color: white;
-    height: 100vh;
 }
 
 .login__container,
@@ -329,6 +328,7 @@ nav {
     width: 100vw;
     height: 100vh;
     background-color: white;
+    overflow: auto;
 }
 
 .login__header,
@@ -1093,17 +1093,20 @@ nav {
         display: none;
     }
 
-    .login {
-        height: 100%;
-    }
 
-    .login__container {
-        height: auto;
+    .login__container,
+    .register__container {
+        height: 80vh;
         width: 35%;
         top: 8%;
     }
 
+    .register__container {
+        top: 8%;
+    }
+
     .login__form,
+    .register__form,
     .to__register__container {
         width: 30vw;
     }
@@ -1149,6 +1152,7 @@ nav {
 @media screen and (min-width: 1200px) {
 
     .login__form,
+    .register__form,
     .to__register__container {
         width: 30vw;
     }
