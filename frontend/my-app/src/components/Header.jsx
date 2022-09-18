@@ -4,7 +4,6 @@ import Messages from './Messages'
 import Category from './Category'
 
 import LogoRenner from '../images/cm_store.png'
-import e from 'cors';
 
 function Header(props) {
     // Messages
@@ -82,6 +81,42 @@ function Header(props) {
 
     return (
         <header>
+            {/* To register */}
+            <div className={`register__background ${showRegister ? "active" : ""}`}>
+                <div className="register">
+                    <div className="register__container">
+                        <div className="register__header">
+                            <i onClick={() => setShowRegister(false)} className="fa-solid fa-arrow-left left"></i>
+                            <h1>REGISTER</h1>
+                            <i onClick={() => (setShowRegister(false), setShowLogin(false))} className="fa-solid fa-x close-login-icon"></i>
+                        </div>
+                        <form className="register__form" action=''>
+                            <div className="input__firstname">
+                                <label>First Name</label>
+                                <input type="text" id='first_name_register' onChange={(e) => handleChange(e)} />
+                            </div>
+                            <div className="input__lastname">
+                                <label>Last Name</label>
+                                <input type="text" id='last_name_register' onChange={(e) => handleChange(e)} />
+                            </div>
+                            <div className="input__email">
+                                <label>E-mail</label>
+                                <input type="email" id='email_register' onChange={(e) => handleChange(e)} />
+                            </div>
+                            <div className="input__password">
+                                <label>Password</label>
+                                <input type="password" id='password_register' onChange={(e) => handleChange(e)} />
+                            </div>
+                            <div className="input__password">
+                                <label>Password Confirmation</label>
+                                <input type="password" id='password_register' onChange={(e) => handleChange(e)} />
+                            </div>
+                            <p><a href="/"><u>I forgot my password</u></a></p>
+                            <button type='submit'>Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
             {/* To login */}
             <div className={`login__background ${showLogin ? "active" : ""}`}>
                 <div className="login">
@@ -103,8 +138,8 @@ function Header(props) {
                             <button type='submit'>Login</button>
                         </form>
                         <div className='login__separator'><span>OR</span></div>
-                        <div className='register__container'>
-                            <button className='register__button'>Register</button>
+                        <div className='to__register__container'>
+                            <button className='register__button' onClick={() => setShowRegister(true)}>Register</button>
                         </div>
                     </div>
                 </div>

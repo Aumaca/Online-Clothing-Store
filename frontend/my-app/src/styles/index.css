@@ -292,7 +292,8 @@ nav {
 /* === End nav menu === */
 
 /* === Login === */
-.login__background {
+.login__background,
+.register__background {
     position: fixed;
     justify-content: center;
     align-items: center;
@@ -303,11 +304,17 @@ nav {
     top: 0;
 }
 
-.login__background.active {
+.register__background {
+    z-index: 2;
+}
+
+.login__background.active,
+.register__background.active {
     display: flex;
 }
 
-.login {
+.login,
+.register {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -315,7 +322,8 @@ nav {
     height: 100vh;
 }
 
-.login__container {
+.login__container,
+.register__container {
     top: 0;
     position: absolute;
     width: 100vw;
@@ -323,7 +331,8 @@ nav {
     background-color: white;
 }
 
-.login__header {
+.login__header,
+.register__header {
     background-color: #191919;
     color: white;
     padding: 1.5rem;
@@ -333,36 +342,49 @@ nav {
     font-size: 1.5rem;
 }
 
-.login__header h1,
-.login__header i {
+.register__header {
+    justify-content: space-between;
+}
+
+.register__header .left {
+    cursor: pointer;
+}
+
+.login__header * {
     margin-left: auto;
 }
 
 .login__form,
-.register__container {
+.register__form,
+.to__register__container {
     display: flex;
     flex-direction: column;
     width: 60vw;
-    margin: 5rem auto;
+    margin: 4rem auto;
     gap: 5rem;
 }
 
-.input__email,
-.input__password {
+.register__form {
+    margin: 3rem auto;
+}
+
+.login__form *:not(button),
+.register__form *:not(button) {
     display: flex;
     flex-direction: column;
     font-size: 1.5rem;
 }
 
-.input__email input,
-.input__password input {
+.login__form input,
+.register__form input {
     padding: 0.5rem;
     border: none;
     border-bottom: 2px solid black;
     outline: none;
 }
 
-.login__form p {
+.login__form p,
+.register__form p {
     display: inline-block;
     text-align: right;
     font-size: 1.3rem;
@@ -381,6 +403,7 @@ nav {
 }
 
 .login__container button,
+.register__container button,
 .register__button {
     padding: 1rem;
     background-color: #c10016;
@@ -391,15 +414,16 @@ nav {
 }
 
 .login__container button:hover,
+.register__container button:hover,
 .register__button:hover {
     background-color: #77000e;
 }
 
-.register__container {
+.to__register__container {
     margin-top: 5rem;
 }
 
-.register__container button {
+.to__register__container button {
     width: 100%;
 }
 
@@ -1080,7 +1104,7 @@ nav {
     }
 
     .login__form,
-    .register__container {
+    .to__register__container {
         width: 30vw;
     }
 
@@ -1125,7 +1149,7 @@ nav {
 @media screen and (min-width: 1200px) {
 
     .login__form,
-    .register__container {
+    .to__register__container {
         width: 30vw;
     }
 }
