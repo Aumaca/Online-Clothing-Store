@@ -63,7 +63,6 @@ class RegisterAccountTest(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    
     def test_invalid_passwords_equal(self):
         first_name = 'james'
         last_name = 'webb'
@@ -78,3 +77,16 @@ class RegisterAccountTest(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_invalid_email(self):
+        first_name = 'james'
+        last_name = 'webb'
+        email = "jameedwin1906outlook.com"
+        password = 'j@meswebbpassword'
+        password_confirmation = 'jameswebb'
+
+        data = {"first_name": first_name, "last_name": last_name, "email": email,
+                "password": password, "password_confirmation": password_confirmation}
+        url = '/api/validation-to-register/'
+        response = self.client.post(url, data, format='multipart')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

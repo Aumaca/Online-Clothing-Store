@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.core.validators import validate_email
 from rest_framework import serializers
 from . import models
 
@@ -87,9 +87,9 @@ class AccountSerializer(serializers.ModelSerializer):
 
         return True
 
-    def email_already_exists(self, data):
+    def email_verification(self, data):
         '''
-        Checks if email already exists.
+        Checks if email is valid and if already exists in db.
         '''
         if models.Account.objects.filter(email=data["email"]).exists():
             raise serializers.ValidationError("Email already exists.")

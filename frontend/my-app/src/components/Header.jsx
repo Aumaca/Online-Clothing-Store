@@ -27,6 +27,7 @@ function Header(props) {
         password: "",
     });
     const [showLogin, setShowLogin] = useState(false);
+    const [loginWasSuccessful, setLoginWasSuccessful] = useState(false);
 
     // Register
     const [registerValues, setRegisterValues] = useState({
@@ -36,6 +37,26 @@ function Header(props) {
         password: "",
         password_confirmation: "",
     });
+    const [firstNameRegisterValidation, setFirstNameRegisterValidation] = useState({
+        is_valid: true,
+        message: '',
+    })
+    const [lastNameRegisterValidation, setLastNameRegisterValidation] = useState({
+        is_valid: true,
+        message: '',
+    })
+    const [emailRegisterValidation, setEmailRegisterValidation] = useState({
+        is_valid: true,
+        message: '',
+    })
+    const [passwordRegisterValidation, setPasswordRegisterValidation] = useState({
+        is_valid: true,
+        message: '',
+    })
+    const [passwordConfirmationRegisterValidation, setPasswordConfirmationRegisterValidation] = useState({
+        is_valid: true,
+        message: '',
+    })
     const [showRegister, setShowRegister] = useState(false);
     const [registerWasSuccessful, setRegisterWasSuccessful] = useState(false);
 
@@ -52,11 +73,24 @@ function Header(props) {
     }
 
     function handleLoginSubmit(e) {
-        console.log('wait!');
+        e.preventDefault();
+        if (!loginValidation()) {
+            return
+        };
+        let headers = {
+            method: 'POST',
+            headers: { Accept: "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify(loginValues),
+        };
+        fetch('http://127.0.0.1:8000/api/validation-to-login/', headers)
+            .then((response) => response.status === 201 ? setLoginWasSuccessful(true) : '');
     }
 
     function handleRegisterSubmit(e) {
         e.preventDefault();
+        if (!registerValidation()) {
+            return
+        };
         let headers = {
             method: 'POST',
             headers: { Accept: "application/json", "Content-Type": "application/json" },
@@ -66,12 +100,67 @@ function Header(props) {
             .then((response) => response.status === 201 ? setRegisterWasSuccessful(true) : '');
     }
 
+    function loginValidation() {
+        ''
+    }
+
+    // Validate fields of register form when submitted.
+    function registerValidation() {
+        // First_name
+        if (registerValues.first_name.length < 2) {
+            setFirstNameRegisterValidation({ is_valid: false, message: 'First name is invalid' })
+            return false
+        } else {
+            setFirstNameRegisterValidation({ is_valid: true, message: '' })
+        }
+        // Last_name
+        if (registerValues.last_name.length < 2) {
+            setLastNameRegisterValidation({ is_valid: false, message: 'Last name is invalid.' })
+            return false
+        } else {
+            setLastNameRegisterValidation({ is_valid: true, message: '' })
+        }
+        // Email
+        let email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (!email_regex.test(registerValues.email)) {
+            setEmailRegisterValidation({ is_valid: false, message: 'Email is invalid.' })
+            return false
+        } else {
+            setEmailRegisterValidation({ is_valid: true, message: '' })
+        }
+        // Password
+        if (registerValues.password.length < 8) {
+            setPasswordRegisterValidation({ is_valid: false, message: 'Password must have more than 8 characters.' })
+            return false
+        } else {
+            setPasswordRegisterValidation({ is_valid: true, message: '' })
+        }
+        // Password confirmation
+        if (registerValues.password !== registerValues.password_confirmation) {
+            setPasswordConfirmationRegisterValidation({ is_valid: false, message: 'The passwords doesn\'t match.' })
+            return false
+        } else {
+            setPasswordConfirmationRegisterValidation({ is_valid: true, message: '' })
+        }
+        return true
+    }
+
     function openSubmenu(index) { // function to be activated by category element
         setShowSubMenu(index);
     };
 
     function openSearchbox() {
         showSearch ? setShowSearch(false) : setShowSearch(true);
+    }
+
+    function openRegisterBox() {
+        if (showRegister) {
+            setShowRegister(false);
+            setShowLogin(true);
+        } else {
+            setShowRegister(true);
+            setShowLogin(false);
+        }
     }
 
     // The page will have a submenu for each categorie that has submenu
@@ -109,30 +198,35 @@ function Header(props) {
                 <div className="register">
                     <div className="register__container">
                         <div className="register__header">
-                            <i onClick={() => setShowRegister(false)} className="fa-solid fa-arrow-left left"></i>
+                            <i onClick={() => openRegisterBox()} className="fa-solid fa-arrow-left left"></i>
                             <h1>REGISTER</h1>
                             <i onClick={() => (setShowRegister(false), setShowLogin(false))} className="fa-solid fa-x close-login-icon"></i>
                         </div>
                         <form className="register__form">
                             <div className="input__firstname">
                                 <label>First Name</label>
-                                <input type="text" id='first_name' onChange={(e) => handleChangeRegister(e)} />
+                                <input type="text" id='first_name' className={firstNameRegisterValidation.is_valid ? '' : 'error'} onChange={(e) => handleChangeRegister(e)} />
+                                <p>{firstNameRegisterValidation.message}</p>
                             </div>
                             <div className="input__lastname">
                                 <label>Last Name</label>
-                                <input type="text" id='last_name' onChange={(e) => handleChangeRegister(e)} />
+                                <input type="text" id='last_name' className={lastNameRegisterValidation.is_valid ? '' : 'error'} onChange={(e) => handleChangeRegister(e)} />
+                                <p>{lastNameRegisterValidation.message}</p>
                             </div>
                             <div className="input__email">
                                 <label>E-mail</label>
-                                <input type="email" id='email' onChange={(e) => handleChangeRegister(e)} />
+                                <input type="email" id='email' className={emailRegisterValidation.is_valid ? '' : 'error'} onChange={(e) => handleChangeRegister(e)} />
+                                <p>{emailRegisterValidation.message}</p>
                             </div>
                             <div className="input__password">
                                 <label>Password</label>
-                                <input type="password" id='password' onChange={(e) => handleChangeRegister(e)} />
+                                <input type="password" id='password' className={passwordRegisterValidation.is_valid ? '' : 'error'} onChange={(e) => handleChangeRegister(e)} />
+                                <p>{passwordRegisterValidation.message}</p>
                             </div>
                             <div className="input__password">
                                 <label>Password Confirmation</label>
-                                <input type="password" id='password_confirmation' onChange={(e) => handleChangeRegister(e)} />
+                                <input type="password" id='password_confirmation' className={passwordConfirmationRegisterValidation.is_valid ? '' : 'error'} onChange={(e) => handleChangeRegister(e)} />
+                                <p>{passwordConfirmationRegisterValidation.message}</p>
                             </div>
                             <p><a href="/"><u>I forgot my password</u></a></p>
                             <button type='submit' onClick={(e) => handleRegisterSubmit(e)}>Register</button>
@@ -162,7 +256,7 @@ function Header(props) {
                         </form>
                         <div className='login__separator'><span>OR</span></div>
                         <div className='to__register__container'>
-                            <button className='register__button' onClick={() => setShowRegister(true)}>Register</button>
+                            <button className='register__button' onClick={() => openRegisterBox()}>Register</button>
                         </div>
                     </div>
                 </div>

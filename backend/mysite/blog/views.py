@@ -96,7 +96,7 @@ class ProductDetails(APIView):
 class RegisterAccount(APIView):
     def post(self, request, format=None):
         serializer = serializers.AccountSerializer(data=request.data)
-        serializer.email_already_exists(data=request.data)
+        serializer.email_verification(data=request.data)
         serializer.password_verification(data=request.data)
         if serializer.is_valid():
             # save() calls create() from serializers.py

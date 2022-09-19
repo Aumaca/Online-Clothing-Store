@@ -383,6 +383,16 @@ nav {
     outline: none;
 }
 
+.login__form input + p,
+.register__form input + p {
+    color: red;
+}
+
+.login__form input.error,
+.register__form input.error {
+    border-bottom: 2px solid #c10016;
+}
+
 .login__form p,
 .register__form p {
     display: inline-block;
