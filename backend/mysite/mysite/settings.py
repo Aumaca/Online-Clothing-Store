@@ -79,6 +79,10 @@ TEMPLATES = [
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#auth-custom-user
 AUTH_USER_MODEL = 'blog.Account'
 
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
+}
+
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 

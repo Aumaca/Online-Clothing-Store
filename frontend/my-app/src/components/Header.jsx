@@ -23,24 +23,47 @@ function Header(props) {
 
     // Login
     const [loginValues, setLoginValues] = useState({
-        email_login: "",
-        password_login: "",
+        email: "",
+        password: "",
     });
     const [showLogin, setShowLogin] = useState(false);
 
     // Register
     const [registerValues, setRegisterValues] = useState({
-        email_register: "",
-        password_register: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
     });
     const [showRegister, setShowRegister] = useState(false);
+    const [registerWasSuccessful, setRegisterWasSuccessful] = useState(false);
 
     // Submenus
     let submenus;
     let categories_with_submenus = [];
 
-    function handleChange(e) {
+    function handleChangeLogin(e) {
         setLoginValues({ ...loginValues, [e.target.id]: e.target.value });
+    }
+
+    function handleChangeRegister(e) {
+        setRegisterValues({ ...registerValues, [e.target.id]: e.target.value });
+    }
+
+    function handleLoginSubmit(e) {
+        console.log('wait!');
+    }
+
+    function handleRegisterSubmit(e) {
+        e.preventDefault();
+        let headers = {
+            method: 'POST',
+            headers: { Accept: "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify(registerValues),
+        };
+        fetch('http://127.0.0.1:8000/api/validation-to-register/', headers)
+            .then((response) => response.status === 201 ? setRegisterWasSuccessful(true) : '');
     }
 
     function openSubmenu(index) { // function to be activated by category element
@@ -90,29 +113,29 @@ function Header(props) {
                             <h1>REGISTER</h1>
                             <i onClick={() => (setShowRegister(false), setShowLogin(false))} className="fa-solid fa-x close-login-icon"></i>
                         </div>
-                        <form className="register__form" action=''>
+                        <form className="register__form">
                             <div className="input__firstname">
                                 <label>First Name</label>
-                                <input type="text" id='first_name_register' onChange={(e) => handleChange(e)} />
+                                <input type="text" id='first_name' onChange={(e) => handleChangeRegister(e)} />
                             </div>
                             <div className="input__lastname">
                                 <label>Last Name</label>
-                                <input type="text" id='last_name_register' onChange={(e) => handleChange(e)} />
+                                <input type="text" id='last_name' onChange={(e) => handleChangeRegister(e)} />
                             </div>
                             <div className="input__email">
                                 <label>E-mail</label>
-                                <input type="email" id='email_register' onChange={(e) => handleChange(e)} />
+                                <input type="email" id='email' onChange={(e) => handleChangeRegister(e)} />
                             </div>
                             <div className="input__password">
                                 <label>Password</label>
-                                <input type="password" id='password_register' onChange={(e) => handleChange(e)} />
+                                <input type="password" id='password' onChange={(e) => handleChangeRegister(e)} />
                             </div>
                             <div className="input__password">
                                 <label>Password Confirmation</label>
-                                <input type="password" id='password_register' onChange={(e) => handleChange(e)} />
+                                <input type="password" id='password_confirmation' onChange={(e) => handleChangeRegister(e)} />
                             </div>
                             <p><a href="/"><u>I forgot my password</u></a></p>
-                            <button type='submit'>Register</button>
+                            <button type='submit' onClick={(e) => handleRegisterSubmit(e)}>Register</button>
                         </form>
                     </div>
                 </div>
@@ -128,14 +151,14 @@ function Header(props) {
                         <form className="login__form" action=''>
                             <div className="input__email">
                                 <label>E-mail</label>
-                                <input type="email" id='email_login' onChange={(e) => handleChange(e)} />
+                                <input type="email" id='email' onChange={(e) => handleChangeLogin(e)} />
                             </div>
                             <div className="input__password">
                                 <label>Password</label>
-                                <input type="password" id='password_login' onChange={(e) => handleChange(e)} />
+                                <input type="password" id='password' onChange={(e) => handleChangeLogin(e)} />
                             </div>
                             <p><a href="/"><u>I forgot my password</u></a></p>
-                            <button type='submit'>Login</button>
+                            <button type='submit' onClick={(e) => handleLoginSubmit(e)}>Login</button>
                         </form>
                         <div className='login__separator'><span>OR</span></div>
                         <div className='to__register__container'>

@@ -1089,6 +1089,10 @@ nav {
         width: 300px;
     }
 
+    .nav__searchbox {
+        padding: 10rem 12rem;
+    }
+
     .toggle__icon {
         display: none;
     }

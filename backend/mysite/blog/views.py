@@ -91,3 +91,16 @@ class ProductDetails(APIView):
         serializer = serializers.ProductSerializer(
             product, context={'request': request})
         return Response(serializer.data, status.HTTP_200_OK)
+
+
+class RegisterAccount(APIView):
+    def post(self, request, format=None):
+        serializer = serializers.AccountSerializer(data=request.data)
+        serializer.email_already_exists(data=request.data)
+        serializer.password_verification(data=request.data)
+        if serializer.is_valid():
+            # save() calls create() from serializers.py
+            serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    

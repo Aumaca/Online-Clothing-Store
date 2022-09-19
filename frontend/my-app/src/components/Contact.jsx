@@ -20,7 +20,7 @@ function Contact() {
             body: JSON.stringify(values),
         };
 
-        fetch('http://127.0.0.1:8000/api/validate-for-newsletter/', headers)
+        fetch('http://127.0.0.1:8000/api/validation-for-newsletter/', headers)
             .then((response) => toSetSubscribed(response.status));
     }
 

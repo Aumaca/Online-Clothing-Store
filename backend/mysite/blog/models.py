@@ -113,7 +113,7 @@ class Product(models.Model):
 
 
 class AccountManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, password=None):
+    def create_user(self, first_name, last_name, email, password=None):
         if not email:
             raise ValueError("User must have an email address.")
         if not first_name:
