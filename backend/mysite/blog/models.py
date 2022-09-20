@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
@@ -147,7 +148,7 @@ class AccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser):
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255, unique=True, verbose_name='email')
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
     date_joined = models.DateTimeField(

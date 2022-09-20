@@ -26,6 +26,14 @@ function Header(props) {
         email: "",
         password: "",
     });
+    const [emailLoginValidation, setEmailLoginValidation] = useState({
+        is_valid: true,
+        message: '',
+    })
+    const [passwordLoginValidation, setPasswordLoginValidation] = useState({
+        is_valid: true,
+        message: '',
+    })
     const [showLogin, setShowLogin] = useState(false);
     const [loginWasSuccessful, setLoginWasSuccessful] = useState(false);
 
@@ -64,6 +72,7 @@ function Header(props) {
     let submenus;
     let categories_with_submenus = [];
 
+    // Handle Changes //
     function handleChangeLogin(e) {
         setLoginValues({ ...loginValues, [e.target.id]: e.target.value });
     }
@@ -72,6 +81,7 @@ function Header(props) {
         setRegisterValues({ ...registerValues, [e.target.id]: e.target.value });
     }
 
+    // Handle Submits //
     function handleLoginSubmit(e) {
         e.preventDefault();
         if (!loginValidation()) {
@@ -96,15 +106,22 @@ function Header(props) {
             headers: { Accept: "application/json", "Content-Type": "application/json" },
             body: JSON.stringify(registerValues),
         };
+        let status_code;
         fetch('http://127.0.0.1:8000/api/validation-to-register/', headers)
-            .then((response) => response.status === 201 ? setRegisterWasSuccessful(true) : '');
-    }
+            .then((response) => response.status === 500 ? (setEmailRegisterValidation({ is_valid: false, message: 'Email already registered.' }), setRegisterWasSuccessful(true)) : setEmailRegisterValidation({ is_valid: true, message: '' }))
+    };
 
+    // Validations //
     function loginValidation() {
-        ''
+        // Email
+        if (loginValues.email.length < 2) {
+            setFirstNameRegisterValidation({ is_valid: false, message: 'First name is invalid' })
+            return false
+        } else {
+            setFirstNameRegisterValidation({ is_valid: true, message: '' })
+        }
     }
 
-    // Validate fields of register form when submitted.
     function registerValidation() {
         // First_name
         if (registerValues.first_name.length < 2) {
@@ -145,6 +162,7 @@ function Header(props) {
         return true
     }
 
+    // To Open //
     function openSubmenu(index) { // function to be activated by category element
         setShowSubMenu(index);
     };
@@ -246,10 +264,12 @@ function Header(props) {
                             <div className="input__email">
                                 <label>E-mail</label>
                                 <input type="email" id='email' onChange={(e) => handleChangeLogin(e)} />
+                                <p>{emailLoginValidation.message}</p>
                             </div>
                             <div className="input__password">
                                 <label>Password</label>
                                 <input type="password" id='password' onChange={(e) => handleChangeLogin(e)} />
+                                <p>{passwordLoginValidation.message}</p>
                             </div>
                             <p><a href="/"><u>I forgot my password</u></a></p>
                             <button type='submit' onClick={(e) => handleLoginSubmit(e)}>Login</button>

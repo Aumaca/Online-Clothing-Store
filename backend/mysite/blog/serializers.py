@@ -1,4 +1,5 @@
-from django.core.validators import validate_email
+import re
+from rest_framework.validators import UniqueValidator
 from rest_framework import serializers
 from . import models
 
@@ -73,47 +74,25 @@ class AccountSerializer(serializers.ModelSerializer):
         model = models.Account
         fields = ['first_name', 'last_name', 'email', 'password']
 
-    def capitalize_names(self, data):
+    def validate_email(self, email):
         '''
-        Validate if names have just alphabetic characters and have more
-        than 2 characters and return them capitalized.
+        Checks if email already exists in db.
         '''
-        if len(data["first_name"]) < 2 or not data["first_name"].isalpha():
-            raise serializers.ValidationError("First name invalid")
-        if len(data["last_name"]) < 2 or not data["last_name"].isalpha():
-            raise serializers.ValidationError("Last name invalid")
-        data["first_name"] = data["first_name"].capitalize()
-        data["last_name"] = data["last_name"].capitalize()
+        if models.Account.objects.filter(email=email).exists():
+            print("email já existe")
+            raise serializers.ValidationError("Email already exist.")
 
-        return True
+        return email
 
-    def email_verification(self, data):
+    def validate_password(self, password):
         '''
-        Checks if email is valid and if already exists in db.
+        Checks if password has more than 8 characters.
         '''
-        if models.Account.objects.filter(email=data["email"]).exists():
-            raise serializers.ValidationError("Email already exists.")
-
-        return True
-
-    def password_verification(self, data):
-        '''
-        Checks if the passwords are equal and if them are valid.
-        If has more than 8 characters.
-        If passwords are equal.
-        '''
-        password = data["password"]
-        password_confirmation = data["password_confirmation"]
-
         if len(password) < 8:
             raise serializers.ValidationError(
-                "The password has less than 8 characters.")
+                "Password has less than 8 characters.")
 
-        if password != password_confirmation or len(password) != len(password_confirmation):
-            raise serializers.ValidationError("The passwords are not equal.")
-
-        return True
+        return password
 
     def create(self, validated_data):
-        self.capitalize_names(validated_data)
         return models.Account.objects.create_user(**validated_data)

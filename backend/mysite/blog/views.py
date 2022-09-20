@@ -1,4 +1,4 @@
-from math import prod
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -96,11 +96,8 @@ class ProductDetails(APIView):
 class RegisterAccount(APIView):
     def post(self, request, format=None):
         serializer = serializers.AccountSerializer(data=request.data)
-        serializer.email_verification(data=request.data)
-        serializer.password_verification(data=request.data)
         if serializer.is_valid():
-            # save() calls create() from serializers.py
             serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(serializer.error_messages, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
