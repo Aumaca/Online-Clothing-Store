@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
@@ -6,7 +5,6 @@ COLOR_CHOICES = (
     ("Green", "Green"),
     ("Red", "Red"),
     ("White", "White"),
-    ("Purple", "Purple"),
     ("Yellow", "Yellow"),
     ("Pink", "Pink"),
     ("Black", "Black"),
@@ -158,6 +156,7 @@ class Account(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    products_in_cart = models.ManyToManyField(Product, default=None)
 
     # Setting email as unique identifier. The field must have 'unique=True'.
     USERNAME_FIELD = 'email'

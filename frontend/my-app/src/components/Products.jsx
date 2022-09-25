@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import '../styles/Products.css'
+
 import Header from './Header';
 import Footer from './Footer';
 
@@ -66,7 +68,7 @@ function Products() {
                         {products.map((product) => {
                             return (
                                 <a href={`/product/${product.id}`} className="product">
-                                    <img src={product.image1} alt="" />
+                                    <img src={product.image1} onMouseOver={e => e.currentTarget.src = product.image2} onMouseLeave={e => e.currentTarget.src = product.image1} alt="" />
                                     <p className='product__name'>{product.name}</p>
                                     <p className='product__price'>U${product.price}</p>
                                     <p className='product__sizes'>{product.has_small ? "S" : ""} {product.has_medium ? "M" : ""} {product.has_large ? "L" : ""}</p>

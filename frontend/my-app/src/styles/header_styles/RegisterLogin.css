@@ -1,0 +1,173 @@
+.login__background,
+.register__background {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(25, 25, 25, 0.75);
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    top: 0;
+}
+
+.register__background {
+    z-index: 2;
+}
+
+.login__background.active,
+.register__background.active {
+    display: flex;
+}
+
+.login,
+.register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.login__container,
+.register__container {
+    top: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    overflow: auto;
+}
+
+.login__header,
+.register__header {
+    background-color: #191919;
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.register__header {
+    justify-content: space-between;
+}
+
+.register__header .left {
+    cursor: pointer;
+}
+
+.login__header * {
+    margin-left: auto;
+}
+
+.login__form,
+.register__form,
+.to__register__container {
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    margin: 4rem auto;
+    gap: 5rem;
+}
+
+.register__form {
+    margin: 3rem auto;
+}
+
+.login__form *:not(button),
+.register__form *:not(button) {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+}
+
+.login__form input,
+.register__form input {
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 2px solid black;
+    outline: none;
+}
+
+.login__form input+p,
+.register__form input+p {
+    color: red;
+}
+
+.login__form input.error,
+.register__form input.error {
+    border-bottom: 2px solid #c10016;
+}
+
+.login__form p,
+.register__form p {
+    display: inline-block;
+    text-align: right;
+    font-size: 1.3rem;
+}
+
+.login__separator {
+    border-bottom: 1px solid black;
+    text-align: center;
+    height: 20px;
+}
+
+.login__separator span {
+    font-size: 30px;
+    background-color: white;
+    padding: 0 10px;
+}
+
+.login__container button,
+.register__container button,
+.register__button {
+    padding: 1rem;
+    background-color: #c10016;
+    color: white;
+    border: 1px solid #c10016;
+    cursor: pointer;
+    transition: 0.15s ease-in-out;
+}
+
+.login__container button:hover,
+.register__container button:hover,
+.register__button:hover {
+    background-color: #77000e;
+}
+
+.to__register__container {
+    margin-top: 5rem;
+}
+
+.to__register__container button {
+    width: 100%;
+}
+
+@media screen and (min-width: 992px) {
+
+    .login__container,
+    .register__container {
+        height: 80vh;
+        width: 35%;
+        top: 8%;
+    }
+
+    .register__container {
+        top: 8%;
+    }
+
+    .login__form,
+    .register__form,
+    .to__register__container {
+        width: 30vw;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+
+    .login__form,
+    .register__form,
+    .to__register__container {
+        width: 30vw;
+    }
+}

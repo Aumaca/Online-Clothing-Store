@@ -1,0 +1,184 @@
+.product__container {
+    margin: 0rem 2.5rem;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+}
+
+.product__overview__first__images {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.product__overview__first__moreimages {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.5rem;
+    margin-top: 3rem;
+}
+
+.product__overview__first__images img,
+.product__overview__second img {
+    width: 100%;
+}
+
+.product__overview__first__images .second_image {
+    display: none;
+}
+
+.product__overview__first__info__name_price {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 2.5rem;
+    gap: 3rem;
+}
+
+.product__overview__first__info__name_price button {
+    padding: 1.5rem;
+    cursor: pointer;
+    background-color: white;
+    position: relative;
+}
+
+.product__overview__first__moreinfo {
+    margin: 2.5rem;
+}
+
+.product__overview__first__moreinfo p {
+    font-size: 1.4rem;
+}
+
+.product__overview__first__moreinfo .composition__title {
+    margin-top: 2rem;
+}
+
+.product__overview__first__buttons__large {
+    display: none;
+}
+
+.dropdown {
+    flex: 1;
+}
+
+.dropdown__menu__container {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown__menu {
+    position: absolute;
+    width: 100%;
+    left: 20;
+    top: -15.6rem;
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1.4rem;
+    background-color: white;
+    border-top: 2px dashed;
+    border-left: 2px dashed;
+    border-right: 2px dashed;
+    border-color: black;
+}
+
+.dropdown__menu.active {
+    display: flex;
+}
+
+.dropdown__menu ul li {
+    padding: 1rem 0;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.dropdown__menu ul li:hover {
+    background-color: rgb(212, 212, 212);
+}
+
+.add__button {
+    border: 2px solid black;
+    font-weight: 600;
+    background-color: #c10016;
+    color: white;
+    cursor: pointer;
+    padding: 1rem;
+    flex: 1;
+}
+
+.sticky__buttons {
+    position: sticky;
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    padding: 2.5rem;
+    background-color: white;
+    bottom: 0;
+}
+
+.dropdown button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+}
+
+.dropdown button p {
+    display: inline;
+}
+
+/* medium (tablet) */
+@media screen and (min-width: 769px) {
+    .sticky__buttons {
+        display: none;
+    }
+
+    .product__overview__first__buttons__large {
+        display: flex;
+        flex-direction: column;
+        margin: 2.5rem;
+        gap: 1.5rem;
+    }
+
+    .product__overview__first {
+        display: flex;
+        flex: 2;
+    }
+
+    .product__overview__first__images {
+        flex: 3;
+    }
+
+    .product__overview__first__info {
+        flex: 2;
+    }
+
+    .product__overview__second {
+        display: none;
+    }
+
+    .product__overview__first__images .second_image {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .product__overview__first__images {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    .product__overview__first__images img {
+        width: 50%;
+    }
+}

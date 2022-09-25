@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
+import '../styles/Product.css'
+
 import Header from './Header';
 import Footer from './Footer';
 
@@ -92,29 +94,31 @@ function Product() {
         return (
             <>
                 <Header messages={messages} categories={categories} />
-                <div>{`cmstore.com/${gender()}/${product.type}`}</div>
-                {/* For above large */}
+                {/* For large */}
                 <div className="product__container">
                     <div className='product__overview'>
-                        <div className="product__overview__large">
-                            <div className="product__overview__images">
+                        <div className="product__overview__first">
+                            <div className="product__overview__first__images">
                                 <img src={product.image1} alt="" />
                                 <img className='second_image' src={product.image2} alt="" />
                             </div>
-                            <div className="product__overview__info__large">
-                                <div className="product__overview__name__price">
+                            <div className="product__overview__first__info">
+                                <div className="product__overview__first__info__name_price">
                                     <h1>{product.name}</h1>
-                                    <h1>U${product.price}</h1>
+                                    <h1>${product.price}</h1>
                                 </div>
 
-                                <div className="product__overview__moreinfo">
+                                <div className="product__overview__first__moreinfo">
                                     <h2 className='description__title'>Description</h2>
                                     <p>{product.description}</p>
                                     <h2 className='composition__title'>Composition</h2>
                                     <p>{product.composition}</p>
-                                    <div className="buttons__small__devices__container large">
-                                        <div className="dropdown">
-                                            <button className="dropdown__button" onClick={() => toOpenDropdown()}><p>{size ? size : 'Select size'}</p><i class="fa-sharp fa-solid fa-caret-down"></i></button>
+                                </div>
+
+                                <div className="product__overview__first__buttons__large">
+                                    <div className="dropdown">
+                                        <button onClick={() => toOpenDropdown()}><p>{size ? size : 'Select size'}</p><i className="fa-sharp fa-solid fa-caret-down"></i></button>
+                                        <div className="dropdown__menu__container">
                                             <div className={openDropdown ? "dropdown__menu active" : "dropdown__menu"}>
                                                 <ul>
                                                     {product.has_small ? <li onClick={() => selectSize('S')}>S</li> : ""}
@@ -123,26 +127,31 @@ function Product() {
                                                 </ul>
                                             </div>
                                         </div>
-                                        <button className="add__button">Add to bag</button>
                                     </div>
+                                    <button className="add__button">Add to bag</button>
                                 </div>
                             </div>
                         </div>
-                        <div className="product__overview__moreimages">
+                        <div className="product__overview__second">
                             <img src={product.image2} alt="" />
                         </div>
                     </div>
                 </div>
-                {/* For above large */}
-                <div className="buttons__small__devices__container small">
+                {/* Sticky buttons container for small screens */}
+                <div className="sticky__buttons">
                     <div className="dropdown">
-                        <button className="dropdown__button" onClick={() => toOpenDropdown()}><p>{size ? size : 'Select size'}</p><i class="fa-sharp fa-solid fa-caret-down"></i></button>
-                        <div className={openDropdown ? "dropdown__menu active" : "dropdown__menu"}>
-                            <ul>
-                                {product.has_small ? <li onClick={() => selectSize('S')}>S</li> : ""}
-                                {product.has_medium ? <li onClick={() => selectSize('M')}>M</li> : ""}
-                                {product.has_large ? <li onClick={() => selectSize('L')}>L</li> : ""}
-                            </ul>
+                        <button onClick={() => toOpenDropdown()}>
+                            <p>{size ? size : 'Select size'}</p>
+                            <i class="fa-sharp fa-solid fa-caret-down"></i>
+                        </button>
+                        <div className="dropdown__menu__container">
+                            <div className={openDropdown ? "dropdown__menu active" : "dropdown__menu"}>
+                                <ul>
+                                    {product.has_small ? <li onClick={() => selectSize('S')}>S</li> : ""}
+                                    {product.has_medium ? <li onClick={() => selectSize('M')}>M</li> : ""}
+                                    {product.has_large ? <li onClick={() => selectSize('L')}>L</li> : ""}
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <button className="add__button">Add to bag</button>

@@ -1,0 +1,339 @@
+header {
+    width: 100%;
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 20;
+    background-color: white;
+    border-bottom: 1px rgb(204, 204, 204) solid;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+/* === Start nav === */
+.nav__left__icons,
+.nav__logo,
+.nav__right__icons {
+    display: flex;
+    flex-basis: 33.3%;
+}
+
+.nav__left__icons ul,
+.nav__right__icons ul {
+    display: flex;
+}
+
+.nav__left__icons ul li,
+.nav__right__icons ul li {
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.nav__left__icons ul li:hover,
+.nav__right__icons ul li:hover {
+    color: red;
+}
+
+.nav__left__icons {
+    justify-content: start;
+}
+
+.nav__logo {
+    justify-content: center;
+}
+
+.nav__right__icons {
+    justify-content: end;
+}
+
+.img__logo {
+    width: 5rem;
+}
+
+.nav__left__icons ul li:not(:last-child) {
+    margin-right: 2rem;
+}
+
+.nav__right__icons ul li {
+    margin-right: 2rem;
+}
+
+.nav__right__icons ul li.user-icon {
+    margin-right: 0;
+}
+
+.close-login-icon {
+    cursor: pointer;
+}
+
+/* === End nav === */
+
+/* === Start nav Searchbox === */
+.nav__searchbox {
+    background-color: white;
+    position: fixed;
+    top: -150%;
+    left: 0;
+    width: 100%;
+    padding: 8rem 2rem;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.nav__searchbox div form {
+    display: flex;
+    justify-content: center;
+}
+
+.nav__searchbox div form input {
+    font-family: 'Montserrat';
+    width: 100%;
+    padding: 10px 0px;
+    border: none;
+    border-bottom: 1px solid red;
+    outline: none;
+}
+
+.nav__searchbox div form button {
+    font-family: 'Montserrat';
+    font-weight: 600;
+    padding: 1rem 2rem;
+    color: white;
+    background-color: red;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.show-searchbox {
+    top: 72px !important;
+    opacity: 1;
+}
+
+/* === End nav Searchbox === */
+
+/* === Start nav menu === */
+.nav__link {
+    font-family: 'Montserrat';
+    display: flex;
+    align-items: center;
+    margin-bottom: 5rem;
+    font-size: 2rem;
+    text-transform: uppercase;
+    transition: .2s ease-in;
+    cursor: pointer;
+}
+
+.nav__link a {
+    display: flex;
+    color: white;
+}
+
+.nav__link:hover {
+    color: red;
+}
+
+.nav__menu__first {
+    background-color: white;
+    padding: 5rem 5rem 1rem 5rem;
+}
+
+.nav__menu__second {
+    height: 100%;
+    background-color: #c10016;
+    color: white;
+    padding: 5rem 5rem 1rem 5rem;
+}
+
+/* begin animation */
+.nav__menu__first .nav__link p,
+.nav__menu__second .nav__link p {
+    transition: 0.2s ease-in-out;
+}
+
+.nav__menu__first .nav__link:hover p,
+.nav__menu__second .nav__link:hover p {
+    margin-left: 20px;
+}
+
+/* end animation */
+
+.nav__menu__first .nav__link {
+    justify-content: space-between;
+}
+
+.nav__menu__second i {
+    margin-right: 2rem;
+}
+
+.nav__menu__second .nav__link:hover {
+    color: white;
+}
+
+.show-menu,
+.show-submenu {
+    left: 0 !important;
+}
+
+.nav__menu,
+.nav__submenu {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: -150vw;
+    transition: 0.3s ease-in-out;
+    overflow: auto;
+}
+
+.nav__submenu {
+    z-index: 100;
+}
+
+.nav__menu__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem 0 3rem;
+}
+
+.nav__menu__header img {
+    width: 5rem;
+    cursor: pointer;
+}
+
+.nav__menu__header i {
+    font-size: 2rem;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+}
+
+.nav__menu__header i:hover {
+    color: red;
+}
+
+.large__categories {
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.large__categories p {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.categorie__hovermenu {
+    position: absolute;
+}
+
+/* === End nav menu === */
+
+@media screen and (max-width: 768px) {
+    .nav__menu__main {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        transition: .3s;
+    }
+
+    .nav__menu__categorie {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        transition: .3s;
+    }
+
+    .nav__menu__categorie {
+        z-index: 23;
+    }
+
+    .nav__menu__main {
+        z-index: 22;
+    }
+}
+
+@media screen and (min-width: 769px) {
+
+    .all__nav__mobile {
+        display: none;
+    }
+
+    .homecards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: top;
+        gap: 30px;
+    }
+
+    #nav-toggle {
+        display: none;
+    }
+
+    .categories__img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .nav__searchbox {
+        padding: 8rem 12rem;
+    }
+}
+
+/* below large (desktop) */
+@media screen and (max-width: 992px) {
+
+    .large__categories {
+        display: none;
+    }
+}
+
+/* large (desktop) */
+@media screen and (min-width: 992px) {
+
+    /* Begin Scrollbar*/
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: white;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: red;
+        border-radius: 100px;
+    }
+
+    /* End Scrollbar*/
+
+    .nav__submenu {
+        width: 300px;
+        border-right: 5px solid red;
+    }
+
+    .nav__searchbox {
+        padding: 10rem 12rem;
+    }
+
+    .toggle__icon {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1200px) {}

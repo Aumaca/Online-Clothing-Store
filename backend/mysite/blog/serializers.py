@@ -69,7 +69,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class AccountSerializer(serializers.ModelSerializer):
+class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Account
         fields = ['first_name', 'last_name', 'email', 'password']
@@ -79,8 +79,7 @@ class AccountSerializer(serializers.ModelSerializer):
         Checks if email already exists in db.
         '''
         if models.Account.objects.filter(email=email).exists():
-            print("email já existe")
-            raise serializers.ValidationError("Email already exist.")
+            raise serializers.ValidationError("Email already exists.")
 
         return email
 
@@ -96,3 +95,18 @@ class AccountSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return models.Account.objects.create_user(**validated_data)
+
+
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Account
+        fields = ['email', 'password']
+
+    def validate_email(self, email):
+        '''
+        Checks if email exists in db.
+        '''
+        if not models.Account.objects.filter(email=email).exists():
+            raise serializers.ValidationError("Email not registered.")
+
+        return email

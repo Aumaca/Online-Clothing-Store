@@ -1,5 +1,7 @@
 import React from 'react'
 
+import '../../styles/home_styles/HomeCards.css'
+
 function HomeCards(props) {
     const { homeCards } = props;
 

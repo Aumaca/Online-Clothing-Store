@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../../styles/header_styles/Category.css'
+
 function Category(props) {
     const { category, openSubmenu, index } = props;
 

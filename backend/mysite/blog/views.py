@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404
 from rest_framework import status
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.contrib.auth import authenticate, login
 
 from . import models
 from . import serializers
@@ -12,7 +13,9 @@ from django.http import Http404
 class CategoryList(APIView):
     def get(self, request, format=None):
         serializer = serializers.CategorySerializer(
-            models.Category.objects.all(), many=True)
+            models.Category.objects.all(), many=True
+        )
+        print(str(request.user))
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -93,11 +96,32 @@ class ProductDetails(APIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
-class RegisterAccount(APIView):
+class GetItemsCart(APIView):
+    permission_classes = [IsAuthenticated, ]
+
+    def get(self, request, format=None):
+        content = {
+            'status': 'request was permitted'
+        }
+        return Response(content)
+
+
+class Register(APIView):
     def post(self, request, format=None):
-        serializer = serializers.AccountSerializer(data=request.data)
+        serializer = serializers.RegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print(serializer.errors)
-        return Response(serializer.error_messages, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Login(APIView):
+    def post(self, request, format=None):
+        email = request.data["email"]
+        password = request.data["password"]
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            return Response('boa', status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response('droga', status=status.HTTP_400_BAD_REQUEST)

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import '../styles/Footer.css'
+
 import app_store from '../images/app_store.png'
 import play_store from '../images/play_store.png'
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-import Slide from './Slide'
+import '../../styles/home_styles/Carousel.css'
+
+import Slide from '../home_components/Slide'
 
 function Carousel(props) {
     const { slides } = props;

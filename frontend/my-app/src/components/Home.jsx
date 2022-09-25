@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 import Header from "./Header"
-import Carousel from "./Carousel"
-import HomeCards from "./HomeCards"
-import Contact from "./Contact";
+import Carousel from "./home_components/Carousel"
+import HomeCards from "./home_components/HomeCards"
+import Contact from "./home_components/Contact"
 import Footer from "./Footer";
 
 function Home() {
