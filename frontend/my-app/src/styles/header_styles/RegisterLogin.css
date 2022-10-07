@@ -143,6 +143,27 @@
     width: 100%;
 }
 
+.register__success {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10rem;
+    gap: 8rem;
+}
+
+.register__success i {
+    background-color: #77C66E;
+    border-radius: 50px;
+    color: white;
+    font-size: 3rem;
+    padding: 2.5rem;
+}
+
+.register__success h2 {
+    font-weight: 600;
+}
+
 @media screen and (min-width: 992px) {
 
     .login__container,

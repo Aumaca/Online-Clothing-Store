@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
+import axios from 'axios'
 
 import '../styles/Cart.css'
 
@@ -7,11 +8,10 @@ export default function Cart(props) {
 
     const [products, setProducts] = useState([])
 
-    // Fetch Product
+    // Fetch Products
     function fetchProducts() {
-        fetch(`http://127.0.0.1:8000/api/products/`)
-            .then(response => response.json())
-            .then(data => setProducts(data))
+        axios(`http://127.0.0.1:8000/api/products/`)
+            .then(response => setProducts(response.data))
     };
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function Cart(props) {
             <div className="cart__products__container">
                 {products.map((product) => {
                     return(
-                        <div className="cart__product">
+                        <div className="cart__product" key={product.id}>
                             <img src={product.image1} alt="" />
                             <div className="info">
                                 <h1>{product.name}</h1>

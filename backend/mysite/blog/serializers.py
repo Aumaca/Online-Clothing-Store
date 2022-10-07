@@ -1,5 +1,3 @@
-import re
-from rest_framework.validators import UniqueValidator
 from rest_framework import serializers
 from . import models
 

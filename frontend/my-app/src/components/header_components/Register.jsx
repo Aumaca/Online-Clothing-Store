@@ -4,32 +4,32 @@ import '../../styles/header_styles/RegisterLogin.css'
 
 export default function Register(props) {
     let { openRegister, showRegister, closeLoginAndRegister } = props;
-
+    
     const [values, setValues] = useState({
-        first_name: "",
-        last_name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
-        password_confirmation: "",
+        passwordConfirmation: "",
     });
     const [firstNameValidation, setFirstNameValidation] = useState({
-        is_valid: true,
+        isValid: true,
         message: '',
     });
     const [lastNameValidation, setLastNameValidation] = useState({
-        is_valid: true,
+        isValid: true,
         message: '',
     });
     const [emailValidation, setEmailValidation] = useState({
-        is_valid: true,
+        isValid: true,
         message: '',
     });
     const [passwordValidation, setPasswordValidation] = useState({
-        is_valid: true,
+        isValid: true,
         message: '',
     });
     const [passwordConfirmationValidation, setPasswordConfirmationValidation] = useState({
-        is_valid: true,
+        isValid: true,
         message: '',
     });
     const [registerWasSuccessful, setRegisterWasSuccessful] = useState(false);
@@ -53,89 +53,91 @@ export default function Register(props) {
             .then((response) => status_code = response.status);
 
         if (status_code === 400) {
-            setEmailValidation({ is_valid: false, message: 'Email already registered.' })
+            setEmailValidation({ isValid: false, message: 'Email already registered.' })
         } else {
-            setEmailValidation({ is_valid: true, message: '' });
+            setEmailValidation({ isValid: true, message: '' });
             setRegisterWasSuccessful(true);
         }
     };
 
     function validation() {
-        // First_name
-        if (values.first_name.length < 2) {
-            setFirstNameValidation({ is_valid: false, message: 'First name is invalid' })
+        // FirstName
+        if (values.firstName.length < 2) {
+            setFirstNameValidation({ isValid: false, message: 'First name is invalid' })
             return false
         } else {
-            setFirstNameValidation({ is_valid: true, message: '' })
+            setFirstNameValidation({ isValid: true, message: '' })
         }
-        // Last_name
-        if (values.last_name.length < 2) {
-            setLastNameValidation({ is_valid: false, message: 'Last name is invalid.' })
+        // LastName
+        if (values.lastName.length < 2) {
+            setLastNameValidation({ isValid: false, message: 'Last name is invalid.' })
             return false
         } else {
-            setLastNameValidation({ is_valid: true, message: '' })
+            setLastNameValidation({ isValid: true, message: '' })
         }
         // Email
         let email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if (!email_regex.test(values.email)) {
-            setEmailValidation({ is_valid: false, message: 'Email is invalid.' })
+            setEmailValidation({ isValid: false, message: 'Email is invalid.' })
             return false
         } else {
-            setEmailValidation({ is_valid: true, message: '' })
+            setEmailValidation({ isValid: true, message: '' })
         }
         // Password
         if (values.password.length < 8) {
-            setPasswordValidation({ is_valid: false, message: 'Password must have more than 8 characters.' })
+            setPasswordValidation({ isValid: false, message: 'Password must have more than 8 characters.' })
             return false
         } else {
-            setPasswordValidation({ is_valid: true, message: '' })
+            setPasswordValidation({ isValid: true, message: '' })
         }
         // Password confirmation
         if (values.password !== values.password_confirmation) {
-            setPasswordConfirmationValidation({ is_valid: false, message: 'The passwords doesn\'t match.' })
+            setPasswordConfirmationValidation({ isValid: false, message: 'The passwords doesn\'t match.' })
             return false
         } else {
-            setPasswordConfirmationValidation({ is_valid: true, message: '' })
+            setPasswordConfirmationValidation({ isValid: true, message: '' })
         }
         return true
     }
 
-    let form_or_success_message = (
+    const REGISTER_FORM = (
         <form className="register__form">
             <div className="input__firstname">
                 <label>First Name</label>
-                <input type="text" id='first_name' className={firstNameValidation.is_valid ? '' : 'error'} onChange={(e) => handleChange(e)} />
+                <input type="text" id='firstName' className={firstNameValidation.isValid ? '' : 'error'} onChange={(e) => handleChange(e)} />
                 <p>{firstNameValidation.message}</p>
             </div>
             <div className="input__lastname">
                 <label>Last Name</label>
-                <input type="text" id='last_name' className={lastNameValidation.is_valid ? '' : 'error'} onChange={(e) => handleChange(e)} />
+                <input type="text" id='lastName' className={lastNameValidation.isValid ? '' : 'error'} onChange={(e) => handleChange(e)} />
                 <p>{lastNameValidation.message}</p>
             </div>
             <div className="input__email">
                 <label>E-mail</label>
-                <input type="email" id='email' className={emailValidation.is_valid ? '' : 'error'} onChange={(e) => handleChange(e)} />
+                <input type="email" id='email' className={emailValidation.isValid ? '' : 'error'} onChange={(e) => handleChange(e)} />
                 <p>{emailValidation.message}</p>
             </div>
             <div className="input__password">
                 <label>Password</label>
-                <input type="password" id='password' className={passwordValidation.is_valid ? '' : 'error'} onChange={(e) => handleChange(e)} />
+                <input type="password" id='password' className={passwordValidation.isValid ? '' : 'error'} onChange={(e) => handleChange(e)} />
                 <p>{passwordValidation.message}</p>
             </div>
             <div className="input__password">
                 <label>Password Confirmation</label>
-                <input type="password" id='password_confirmation' className={passwordConfirmationValidation.is_valid ? '' : 'error'} onChange={(e) => handleChange(e)} />
+                <input type="password" id='passwordConfirmation' className={passwordConfirmationValidation.isValid ? '' : 'error'} onChange={(e) => handleChange(e)} />
                 <p>{passwordConfirmationValidation.message}</p>
             </div>
             <p><a href="/"><u>I forgot my password</u></a></p>
             <button type='submit' onClick={(e) => handleSubmit(e)}>Register</button>
         </form>
+    )
+
+    const SUCCESS_MESSAGE = (
+        <div className='register__success'>
+            <i className="fa-solid fa-check check"></i>
+            <h1>Your register was successful!</h1>
+        </div>
     );
-    if (registerWasSuccessful) {
-        form_or_success_message = (
-            <h1>Boa!!!</h1>
-        )
-    }
 
     return (
         <div className={`register__background ${showRegister ? "active" : ""}`}>
@@ -146,7 +148,7 @@ export default function Register(props) {
                         <h1>REGISTER</h1>
                         <i onClick={() => closeLoginAndRegister()} className="fa-solid fa-x close-login-icon"></i>
                     </div>
-                    {form_or_success_message}
+                    {registerWasSuccessful ? SUCCESS_MESSAGE : REGISTER_FORM}
                 </div>
             </div>
         </div >

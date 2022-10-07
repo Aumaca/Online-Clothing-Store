@@ -1,8 +1,11 @@
 from rest_framework import status
-from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.contrib.auth import authenticate, login
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
+
+from mysite import settings
 
 from . import models
 from . import serializers
@@ -15,7 +18,6 @@ class CategoryList(APIView):
         serializer = serializers.CategorySerializer(
             models.Category.objects.all(), many=True
         )
-        print(str(request.user))
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -53,6 +55,7 @@ class MessagesList(APIView):
 
 
 class SlidesList(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request, format=None):
         serializer = serializers.SlideSerializer(models.Slide.objects.all(), context={
             'request': request}, many=True)
@@ -115,13 +118,44 @@ class Register(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
+
+
 class Login(APIView):
     def post(self, request, format=None):
-        email = request.data["email"]
-        password = request.data["password"]
-        user = authenticate(request, email=email, password=password)
+        data = request.data
+        response = Response()
+        email = data["email"]
+        password = data["password"]
+        user = authenticate(email=email, password=password)
         if user is not None:
-            login(request, user)
-            return Response('boa', status=status.HTTP_202_ACCEPTED)
+            if user.is_active:
+                tokens = get_tokens_for_user(user)
+                # Access token
+                response.set_cookie(
+                    key=settings.SIMPLE_JWT['AUTH_COOKIE_KEY_ACCESS'],
+                    value=tokens['access'],
+                    expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+                    secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                    httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                    samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                )
+                # Refresh token
+                response.set_cookie(
+                    key=settings.SIMPLE_JWT['AUTH_COOKIE_KEY_REFRESH'],
+                    value=tokens['refresh'],
+                    expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+                    secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                    httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                    samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                )
+                response.data = {"Message": "Login was successfully"}
+                return response
         else:
-            return Response('droga', status=status.HTTP_400_BAD_REQUEST)
+            return Response({"Message": "Invalid credentials"}, status=status.HTTP_404_NOT_FOUND)

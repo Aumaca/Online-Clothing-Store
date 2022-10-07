@@ -86,7 +86,7 @@ class LoginAccountTest(TestCase):
             "email": self.user_data["email"],
             "password": self.user_data["password"],
         }
-        url = '/api/token/'
+        url = '/api/token/get-pair/'
 
         response = self.client.post(url, data)
         result = json.loads(response.content)
@@ -100,9 +100,11 @@ class LoginAccountTest(TestCase):
         password = 'james123'
 
         data = {"email": email, "password": password}
-        url = '/api/token/'
+        url = '/api/token/get-pair/'
 
         response = self.client.post(url, data)
+
+        print(response.content)
 
         self.assertEqual(response.status_code,
                          status.HTTP_401_UNAUTHORIZED)
