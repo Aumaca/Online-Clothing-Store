@@ -49,7 +49,7 @@ export default function Register(props) {
             body: JSON.stringify(values),
         };
         let status_code;
-        fetch('http://127.0.0.1:8000/api/validation-to-register/', headers)
+        fetch(`${process.env.REACT_APP_BASEURL}/api/validation-to-register/`, headers)
             .then((response) => status_code = response.status);
 
         if (status_code === 400) {

@@ -55,7 +55,6 @@ class MessagesList(APIView):
 
 
 class SlidesList(APIView):
-    permission_classes = [IsAuthenticated]
     def get(self, request, format=None):
         serializer = serializers.SlideSerializer(models.Slide.objects.all(), context={
             'request': request}, many=True)

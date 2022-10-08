@@ -25,7 +25,7 @@ function Products() {
 
     // Fetch Messages
     function fetchMessages() {
-        fetch('http://127.0.0.1:8000/api/messages/')
+        fetch(`${process.env.REACT_APP_BASEURL}/api/messages/`)
             .then(response => response.json())
             .then(data => setMessages(data))
             .finally(() => setIsLoadingMessages(false))
@@ -33,7 +33,7 @@ function Products() {
 
     // Fetch Categories
     function fetchCategories() {
-        fetch('http://127.0.0.1:8000/api/categories/')
+        fetch(`${process.env.REACT_APP_BASEURL}/api/categories/`)
             .then(response => response.json())
             .then(data => setCategories(data))
             .finally(() => setIsLoadingCategories(false))
@@ -41,7 +41,7 @@ function Products() {
 
     // Fetch Product
     function fetchProducts() {
-        fetch(`http://127.0.0.1:8000/api/products/`)
+        fetch(`${process.env.REACT_APP_BASEURL}/api/products/`)
             .then(response => response.json())
             .then(data => setProducts(data))
             .finally(() => setIsLoadingProducts(false))
@@ -67,7 +67,7 @@ function Products() {
                     <div className="products__grid">
                         {products.map((product) => {
                             return (
-                                <a href={`/product/${product.id}`} className="product">
+                                <a href={`${process.env.REACT_APP_BASEURL}/product/${product.id}`} className="product">
                                     <img src={product.image1} onMouseOver={e => e.currentTarget.src = product.image2} onMouseLeave={e => e.currentTarget.src = product.image1} alt="" />
                                     <p className='product__name'>{product.name}</p>
                                     <p className='product__price'>U${product.price}</p>

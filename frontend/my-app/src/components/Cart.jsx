@@ -10,7 +10,7 @@ export default function Cart(props) {
 
     // Fetch Products
     function fetchProducts() {
-        axios(`http://127.0.0.1:8000/api/products/`)
+        axios(`${process.env.REACT_APP_BASEURL}/api/products/`)
             .then(response => setProducts(response.data))
     };
 

@@ -30,7 +30,7 @@ function Home() {
 
     // Fetch Messages
     function fetchMessages() {
-        fetch('http://127.0.0.1:8000/api/messages/')
+        fetch(`${process.env.REACT_APP_BASEURL}/api/messages/`)
             .then(response => response.json())
             .then(data => setMessages(data))
             .finally(() => setIsLoadingMessages(false))
@@ -38,7 +38,7 @@ function Home() {
 
     // Fetch Categories
     function fetchCategories() {
-        fetch('http://127.0.0.1:8000/api/categories/')
+        fetch(`${process.env.REACT_APP_BASEURL}/api/categories/`)
             .then(response => response.json())
             .then(data => setCategories(data))
             .finally(() => setIsLoadingCategories(false))
@@ -46,7 +46,7 @@ function Home() {
 
     // Fetch Slides
     function fetchSlides() {
-        fetch('http://127.0.0.1:8000/api/slides/')
+        fetch(`${process.env.REACT_APP_BASEURL}/api/slides/`)
             .then(response => response.json())
             .then(data => setSlides(data))
             .finally(() => setIsLoadingSlides(false))
@@ -54,7 +54,7 @@ function Home() {
 
     // Fetch Homecards
     function fetchHomeCards() {
-        fetch('http://127.0.0.1:8000/api/home-cards/')
+        fetch(`${process.env.REACT_APP_BASEURL}/api/home-cards/`)
             .then(response => response.json())
             .then(data => setHomeCards(data))
             .finally(() => setIsLoadingHomeCards(false))

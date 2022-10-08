@@ -1,27 +1,26 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import api from '../../utils/api';
-import { useCookies } from 'react-cookie'
 
 import '../../styles/header_styles/RegisterLogin.css'
 
 export default function Login(props) {
     let { openLogin, showLogin, openRegister } = props;
 
-    const [cookies, setCookie] = useCookies('')
-
     const [values, setValues] = useState({
         email: "",
         password: "",
     });
+
     const [emailValidation, setEmailValidation] = useState({
         isValid: true,
         message: '',
     });
+
     const [passwordValidation, setPasswordValidation] = useState({
         isValid: true,
         message: '',
     });
+    
     const [loginWasSuccessful, setLoginWasSuccessful] = useState(false);
 
     // Handle Changes //

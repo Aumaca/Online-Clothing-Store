@@ -34,7 +34,7 @@ function Product() {
 
     // Fetch Messages
     function fetchMessages() {
-        fetch('http://127.0.0.1:8000/api/messages/')
+        fetch(`${process.env.REACT_APP_BASEURL}/api/messages/`)
             .then(response => response.json())
             .then(data => setMessages(data))
             .finally(() => setIsLoadingMessages(false))
@@ -42,7 +42,7 @@ function Product() {
 
     // Fetch Categories
     function fetchCategories() {
-        fetch('http://127.0.0.1:8000/api/categories/')
+        fetch(`${process.env.REACT_APP_BASEURL}/api/categories/`)
             .then(response => response.json())
             .then(data => setCategories(data))
             .finally(() => setIsLoadingCategories(false))
@@ -50,7 +50,7 @@ function Product() {
 
     // Fetch Product
     function fetchProduct() {
-        fetch(`http://127.0.0.1:8000/api/product-details/${id}`)
+        fetch(`${process.env.REACT_APP_BASEURL}/api/product-details/${id}`)
             .then(response => response.json())
             .then(data => setProduct(data))
             .finally(() => setIsLoadingProduct(false))
