@@ -1,0 +1,33 @@
+.products {
+    margin: 0 1rem;
+}
+
+.products__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 240px));
+    justify-items: center;
+    justify-content: center;
+}
+
+.product {
+    margin-bottom: 1.5rem;
+    width: 220px;
+    gap: 0.5rem;
+}
+
+.product img {
+    width: 220px;
+}
+
+.product__name {
+    margin-top: 0.5rem;
+    font-size: 1.8rem;
+}
+
+.product__price {
+    font-size: 1.6rem;
+}
+
+.product__sizes {
+    font-size: 1.4rem;
+}

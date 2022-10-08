@@ -22,9 +22,19 @@ class SlideAdmin(admin.ModelAdmin):
     list_display = ('title', 'url', 'index')
 
 
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'gender', 'id')
+
+
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ('email', 'full_name')
+
+
 admin.site.register(models.Category, CategoryAdmin)
 admin.site.register(models.Message, MessageAdmin)
 admin.site.register(models.ProductType)
 admin.site.register(models.Slide, SlideAdmin)
 admin.site.register(models.HomeCard, HomecardAdmin)
 admin.site.register(models.NewsletterEmail, NewsletterEmailAdmin)
+admin.site.register(models.Product, ProductAdmin)
+admin.site.register(models.Account, AccountAdmin)

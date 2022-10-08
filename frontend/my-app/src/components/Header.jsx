@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
+import { redirect } from 'react-router-dom'
 
-import Messages from './Messages'
-import Category from './Category'
+import '../styles/Header.css'
+
+import Messages from './header_components/Messages'
+import Category from './header_components/Category'
+import Login from './header_components/Login'
+import Register from './header_components/Register'
+
+import Cart from './Cart'
 
 import LogoRenner from '../images/cm_store.png'
 
@@ -21,9 +28,38 @@ function Header(props) {
     // Search
     const [showSearch, setShowSearch] = useState(false);
 
+    // Cart
+    const [showCart, setShowCart] = useState(false);
+
+    // Login
+    const [showLogin, setShowLogin] = useState(false);
+
+    // Register
+    const [showRegister, setShowRegister] = useState(false);
+
     // Submenus
     let submenus;
     let categories_with_submenus = [];
+
+    // To Open //
+    function openLogin() {
+        if (showLogin) {
+            setShowLogin(false);
+        } else {
+            setShowLogin(true);
+        }
+    }
+
+    // When register button or back from register is clicked.
+    function openRegister() {
+        if (showRegister) {
+            setShowRegister(false);
+            setShowLogin(true);
+        } else {
+            setShowLogin(false);
+            setShowRegister(true);
+        }
+    };
 
     function openSubmenu(index) { // function to be activated by category element
         setShowSubMenu(index);
@@ -31,7 +67,17 @@ function Header(props) {
 
     function openSearchbox() {
         showSearch ? setShowSearch(false) : setShowSearch(true);
+    };
+
+    // To Close //
+    function closeLoginAndRegister() {
+        setShowLogin(false);
+        setShowRegister(false);
     }
+
+    function closeCart() {
+        setShowCart(false);
+    };
 
     // The page will have a submenu for each categorie that has submenu
     submenus = Array.from(categories.map((category) => {
@@ -53,7 +99,7 @@ function Header(props) {
                                         <p>{product.name}</p>
                                     </a>
                                 )
-                            })};
+                            })}
                         </div>
                     </div>
                 </div>
@@ -63,12 +109,16 @@ function Header(props) {
 
     return (
         <header>
+            <Cart showCart={showCart} closeCart={closeCart} />
+            <Register openRegister={openRegister} showRegister={showRegister} closeLoginAndRegister={closeLoginAndRegister} />
+            {/* To login */}
+            <Login openLogin={openLogin} openRegister={openRegister} showLogin={showLogin} />
             <Messages messages={messages} />
             <nav>
                 {/* Menu icon and Search icon */}
                 <div className="nav__left__icons">
                     <ul>
-                        <li onClick={() => setShowMenu(true)}><i className="fa-solid fa-bars"></i></li>
+                        <li className='toggle__icon' onClick={() => setShowMenu(true)}><i className="fa-solid fa-bars"></i></li>
                         <li onClick={() => openSearchbox()}><i className="fa-solid fa-magnifying-glass"></i></li>
                     </ul>
                 </div>
@@ -83,11 +133,28 @@ function Header(props) {
                 {/* Bag and User */}
                 <div className="nav__right__icons">
                     <ul>
-                        <li><i className="fa-solid fa-bag-shopping"></i></li>
-                        <li><i className="fa-solid fa-user"></i></li>
+                        <li onClick={() => setShowCart(true)}><i className="fa-solid fa-bag-shopping"></i></li>
+                        <li onClick={() => setShowLogin(true)} className='user-icon'><i className="fa-solid fa-user"></i></li>
                     </ul>
                 </div>
             </nav>
+
+            {/* categories above nav */}
+            <div className="large__categories">
+                {categories.map((category) => {
+                    if (categories_with_submenus.includes(category)) {
+                        let index = categories_with_submenus.indexOf(category); // index is the index of the category in the array.
+                        return (
+                            <p key={category.id} onClick={() => openSubmenu(index)}>{category.name}</p>
+                        )
+                    } else {
+                        return (
+                            <p key={category.id}>{category.name}</p>
+                        )
+                    }
+                }
+                )}
+            </div>
 
             {/* Search */}
             <div className={showSearch ? "nav__searchbox show-searchbox" : "nav__searchbox"}>
@@ -143,7 +210,7 @@ function Header(props) {
                                 <p>Localization</p>
                             </a>
                         </div>
-                        
+
                         <div className="nav__link">
                             <a href="/about_us/">
                                 <i className="fa-solid fa-timeline"></i>

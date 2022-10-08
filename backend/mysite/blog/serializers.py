@@ -41,7 +41,7 @@ class SlideSerializer(serializers.ModelSerializer):
 class HomeCardSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(use_url=True)
 
-    class Meta: 
+    class Meta:
         model = models.HomeCard
         exclude = ['id']
 
@@ -59,3 +59,52 @@ class NewsletterEmailSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError('Name is invalid')
         # Return just the first and second name capitalized
         return (" ").join(x.capitalize() for x in name.split(" ")[0:2])
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Product
+        fields = '__all__'
+
+
+class RegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Account
+        fields = ['first_name', 'last_name', 'email', 'password']
+
+    def validate_email(self, email):
+        '''
+        Checks if email already exists in db.
+        '''
+        if models.Account.objects.filter(email=email).exists():
+            raise serializers.ValidationError("Email already exists.")
+
+        return email
+
+    def validate_password(self, password):
+        '''
+        Checks if password has more than 8 characters.
+        '''
+        if len(password) < 8:
+            raise serializers.ValidationError(
+                "Password has less than 8 characters.")
+
+        return password
+
+    def create(self, validated_data):
+        return models.Account.objects.create_user(**validated_data)
+
+
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Account
+        fields = ['email', 'password']
+
+    def validate_email(self, email):
+        '''
+        Checks if email exists in db.
+        '''
+        if not models.Account.objects.filter(email=email).exists():
+            raise serializers.ValidationError("Email not registered.")
+
+        return email

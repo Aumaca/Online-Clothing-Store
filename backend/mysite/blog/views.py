@@ -1,6 +1,11 @@
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
+
+from mysite import settings
 
 from . import models
 from . import serializers
@@ -11,7 +16,8 @@ from django.http import Http404
 class CategoryList(APIView):
     def get(self, request, format=None):
         serializer = serializers.CategorySerializer(
-            models.Category.objects.all(), many=True)
+            models.Category.objects.all(), many=True
+        )
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -68,4 +74,87 @@ class NewsletterEmailCreate(APIView):
         serializer.validate_name(data=request.data["name"])
         serializer.is_valid()
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)    
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class ProductList(APIView):
+    def get(self, request, format=None):
+        serializer = serializers.ProductSerializer(
+            models.Product.objects.all(), context={'request': request}, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class ProductDetails(APIView):
+    def get_object(self, pk):
+        try:
+            return models.Product.objects.get(pk=pk)
+        except models.Product.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        product = self.get_object(pk)
+        serializer = serializers.ProductSerializer(
+            product, context={'request': request})
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class GetItemsCart(APIView):
+    permission_classes = [IsAuthenticated, ]
+
+    def get(self, request, format=None):
+        content = {
+            'status': 'request was permitted'
+        }
+        return Response(content)
+
+
+class Register(APIView):
+    def post(self, request, format=None):
+        serializer = serializers.RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
+
+
+class Login(APIView):
+    def post(self, request, format=None):
+        data = request.data
+        response = Response()
+        email = data["email"]
+        password = data["password"]
+        user = authenticate(email=email, password=password)
+        if user is not None:
+            if user.is_active:
+                tokens = get_tokens_for_user(user)
+                # Access token
+                response.set_cookie(
+                    key=settings.SIMPLE_JWT['AUTH_COOKIE_KEY_ACCESS'],
+                    value=tokens['access'],
+                    expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+                    secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                    httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                    samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                )
+                # Refresh token
+                response.set_cookie(
+                    key=settings.SIMPLE_JWT['AUTH_COOKIE_KEY_REFRESH'],
+                    value=tokens['refresh'],
+                    expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+                    secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                    httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                    samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                )
+                response.data = {"Message": "Login was successfully"}
+                return response
+        else:
+            return Response({"Message": "Invalid credentials"}, status=status.HTTP_404_NOT_FOUND)

@@ -1,0 +1,17 @@
+.messages {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    font-family: 'Montserrat';
+    font-size: 1.2rem;
+    transition: 1s ease-in;
+}
+
+.messages div a p,
+.messages div a {
+    transition: 1s ease-in;
+}
+
+.removed {
+    display: none !important;
+}
