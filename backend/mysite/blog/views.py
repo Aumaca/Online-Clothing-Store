@@ -127,6 +127,11 @@ def get_tokens_for_user(user):
 
 
 class Login(APIView):
+    '''
+    Takes the user credentials and authenticate.
+    Inserts tokens in cookies into user browser.
+    '''
+
     def post(self, request, format=None):
         data = request.data
         response = Response()
@@ -157,4 +162,30 @@ class Login(APIView):
                 response.data = {"Message": "Login was successfully"}
                 return response
         else:
-            return Response({"Message": "Invalid credentials"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"Message": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class User(APIView):
+    '''
+    Returns the user data.
+    '''
+
+    def get(self, request, format=None):
+        try:
+            user = request.user
+            products_serializer = serializers.ProductSerializer(
+                user.products_in_cart,
+                many=True
+            )
+            products_in_cart = products_serializer.data
+            user_data = {
+                'email': str(user.email),
+                'first_name': str(user.first_name),
+                'last_name': str(user.last_name),
+                'date_joined': f'{user.date_joined.day}/{user.date_joined.month}/{user.date_joined.year}',
+                # Return just the products id.
+                'products_in_cart': [x["id"] for x in products_in_cart],
+            }
+            return Response(user_data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
