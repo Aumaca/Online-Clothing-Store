@@ -30,9 +30,9 @@ urlpatterns = [
     path('api/validation-to-login/', views.Login.as_view()),
     path('api/validation-to-register/', views.Register.as_view()),
 
-    ### JWT ###
-    path('api/token/get-pair/', views.Login.as_view(),
-         name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    ### JWT/USER AUTH ###
+    path('api/user/login/', views.Login.as_view()),
+    path('api/user/refresh/', TokenRefreshView.as_view()),
+    path('api/user/me/', views.User.as_view()),
+    path('api/user/verify/', TokenVerifyView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

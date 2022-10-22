@@ -33,7 +33,7 @@ def simple_middleware(get_response):
         if refresh_token:
             # URL to refresh tokens
             tokens_request = requests.post(
-                'http://127.0.0.1:8000/api/token/refresh/',
+                'http://127.0.0.1:8000/api/user/refresh/',
                 data={'refresh': refresh_token}
             )
             # To json for python object
