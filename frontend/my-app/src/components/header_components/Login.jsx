@@ -31,7 +31,7 @@ export default function Login(props) {
     // Handle Submit //
     function handleSubmit(e) {
         e.preventDefault();
-        axios.post(`${process.env.REACT_APP_BASEURL}token/get-pair/`, values)
+        axios.post(`${process.env.REACT_APP_BASEURL}/api/user/login/`, values, { withCredentials: true })
             .then((response) => {
                 setEmailValidation({ isValid: true, message: '' });
                 setPasswordValidation({ isValid: true, message: '' });

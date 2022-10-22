@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 
 import '../../styles/header_styles/RegisterLogin.css'
@@ -43,15 +44,9 @@ export default function Register(props) {
         if (!validation()) {
             return
         };
-        let headers = {
-            method: 'POST',
-            headers: { Accept: "application/json", "Content-Type": "application/json" },
-            body: JSON.stringify(values),
-        };
         let status_code;
-        fetch(`${process.env.REACT_APP_BASEURL}/api/validation-to-register/`, headers)
+        axios.post(`${process.env.REACT_APP_BASEURL}/api/user/register/`, values)
             .then((response) => status_code = response.status);
-
         if (status_code === 400) {
             setEmailValidation({ isValid: false, message: 'Email already registered.' })
         } else {

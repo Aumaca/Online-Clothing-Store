@@ -5,7 +5,6 @@ from django.conf.urls.static import static
 from mysite import settings
 
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView,
 )
@@ -27,12 +26,11 @@ urlpatterns = [
     ### Validation ###
     path('api/validation-for-newsletter/',
          views.NewsletterEmailCreate.as_view()),
-    path('api/validation-to-login/', views.Login.as_view()),
-    path('api/validation-to-register/', views.Register.as_view()),
 
     ### JWT/USER AUTH ###
+    path('api/user/register/', views.Register.as_view()),
     path('api/user/login/', views.Login.as_view()),
-    path('api/user/refresh/', TokenRefreshView.as_view()),
     path('api/user/me/', views.User.as_view()),
+    path('api/user/refresh/', TokenRefreshView.as_view()),
     path('api/user/verify/', TokenVerifyView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

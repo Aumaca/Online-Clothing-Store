@@ -25,9 +25,7 @@ SECRET_KEY = 'django-insecure-@*5xw8&n_ip1=mtz=x&$+v^d=*wj@p_--1kh_%80zxf=@ky#n6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CORS_ALLOW_CREDENTIALS: False
-ALLOWED_HOSTS = []
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:3000",
@@ -40,7 +38,6 @@ CORS_ALLOW_METHODS = [
     "POST",
     "PUT",
 ]
-
 
 # Application definition
 
@@ -59,9 +56,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -107,17 +104,13 @@ SIMPLE_JWT = {
     'SIGNING_KEY': 'SECRET_KEY',
     'AUTH_HEADER_TYPES': ('Bearer',),
     
-    'AUTH_COOKIE_KEY_ACCESS': 'access_token',
-    'AUTH_COOKIE_KEY_REFRESH': 'refresh_token',
+    'AUTH_COOKIE_KEY_ACCESS': 'access',
+    'AUTH_COOKIE_KEY_REFRESH': 'refresh',
     'AUTH_COOKIE_DOMAIN': None,
     'AUTH_COOKIE_SECURE': False,
     'AUTH_COOKIE_HTTP_ONLY': True,
     'AUTH_COOKIE_PATH': '/',
     'AUTH_COOKIE_SAMESITE': 'Lax',
-}
-
-REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
 }
 
 WSGI_APPLICATION = 'mysite.wsgi.application'

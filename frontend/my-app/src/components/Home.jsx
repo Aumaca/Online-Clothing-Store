@@ -6,7 +6,10 @@ import HomeCards from "./home_components/HomeCards"
 import Contact from "./home_components/Contact"
 import Footer from "./Footer";
 
-function Home() {
+function Home(props) {
+    // User Data
+    const userData = props.userData
+
     // Loading
     const [isLoading, setIsLoading] = useState(true);
 
