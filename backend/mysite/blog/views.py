@@ -129,40 +129,49 @@ def get_tokens_for_user(user):
 class Login(APIView):
     '''
     Takes the user credentials and authenticate.
-    Inserts tokens in cookies into user browser.
+    Tries to verify if user is already logged,
+    if not, takes the credentials and return tokens,
+    that will be inserted in cookies into user browser.
     '''
 
     def post(self, request, format=None):
-        data = request.data
-        response = Response()
-        email = data["email"]
-        password = data["password"]
-        user = authenticate(email=email, password=password)
-        if user is not None:
-            if user.is_active:
-                tokens = get_tokens_for_user(user)
-                # Access token
-                response.set_cookie(
-                    key=settings.SIMPLE_JWT['AUTH_COOKIE_KEY_ACCESS'],
-                    value=tokens['access'],
-                    expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-                    secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                    httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                    samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-                )
-                # Refresh token
-                response.set_cookie(
-                    key=settings.SIMPLE_JWT['AUTH_COOKIE_KEY_REFRESH'],
-                    value=tokens['refresh'],
-                    expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
-                    secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                    httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                    samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
-                )
-                response.data = {"Message": "Login was successfully"}
-                return response
-        else:
-            return Response({"Message": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        try:
+            email = request.user.email
+            print(email)
+            return Response({"User already logged": "User already logged"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        except:
+            data = request.data
+            response = Response()
+            email = data["email"]
+            password = data["password"]
+            user = authenticate(email=email, password=password)
+            if user is not None:
+                if user.is_active:
+                    tokens = get_tokens_for_user(user)
+                    # Access token
+                    response.set_cookie(
+                        key=settings.SIMPLE_JWT['AUTH_COOKIE_KEY_ACCESS'],
+                        value=tokens['access'],
+                        expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+                        secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                        httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                        samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                    )
+                    # Refresh token
+                    response.set_cookie(
+                        key=settings.SIMPLE_JWT['AUTH_COOKIE_KEY_REFRESH'],
+                        value=tokens['refresh'],
+                        expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+                        secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                        httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                        samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                    )
+                    response.data = {"Message": "Login was successfully"}
+                    return response
+                else:
+                    return Response({"Message": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+            else:
+                return Response({"Message": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class User(APIView):
