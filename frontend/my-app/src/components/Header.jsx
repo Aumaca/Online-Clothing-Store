@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { redirect } from 'react-router-dom'
 
 import '../styles/Header.css'
@@ -7,17 +7,13 @@ import Messages from './header_components/Messages'
 import Category from './header_components/Category'
 import Login from './header_components/Login'
 import Register from './header_components/Register'
-
+import User from './header_components/User'
 import Cart from './Cart'
 
 import LogoRenner from '../images/cm_store.png'
 
 function Header(props) {
-    // Messages
-    const { messages } = props;
-
-    // Categories
-    const { categories } = props;
+    const { userData, messages, categories } = props;
 
     // Menu
     const [showMenu, setShowMenu] = useState(false);
@@ -32,7 +28,7 @@ function Header(props) {
     const [showCart, setShowCart] = useState(false);
 
     // Login
-    const [showLogin, setShowLogin] = useState(false);
+    const [showLoginOrUser, setShowLoginOrUser] = useState(false);
 
     // Register
     const [showRegister, setShowRegister] = useState(false);
@@ -42,21 +38,34 @@ function Header(props) {
     let categories_with_submenus = [];
 
     // To Open //
-    function openLogin() {
-        if (showLogin) {
-            setShowLogin(false);
+    function openLoginOrUser() {
+        if (showLoginOrUser) {
+            setShowLoginOrUser(false);
         } else {
-            setShowLogin(true);
+            setShowLoginOrUser(true);
         }
     }
+
+    // If user is logged, User component is returned.
+    // If user is not logged, Login component is returned.
+    function loginOrUserComponent() {
+        console.log(userData);
+        if (userData) {
+            let Profile = <User userData={userData} openUser={openLoginOrUser} showUser={showLoginOrUser} />;
+            return Profile
+        } else {
+            let Profile = <Login openLogin={openLoginOrUser} openRegister={openRegister} showLogin={showLoginOrUser} />;
+            return Profile
+        };
+    };
 
     // When register button or back from register is clicked.
     function openRegister() {
         if (showRegister) {
             setShowRegister(false);
-            setShowLogin(true);
+            setShowLoginOrUser(true);
         } else {
-            setShowLogin(false);
+            setShowLoginOrUser(false);
             setShowRegister(true);
         }
     };
@@ -71,7 +80,7 @@ function Header(props) {
 
     // To Close //
     function closeLoginAndRegister() {
-        setShowLogin(false);
+        setShowLoginOrUser(false);
         setShowRegister(false);
     }
 
@@ -112,7 +121,7 @@ function Header(props) {
             <Cart showCart={showCart} closeCart={closeCart} />
             <Register openRegister={openRegister} showRegister={showRegister} closeLoginAndRegister={closeLoginAndRegister} />
             {/* To login */}
-            <Login openLogin={openLogin} openRegister={openRegister} showLogin={showLogin} />
+            {loginOrUserComponent()}
             <Messages messages={messages} />
             <nav>
                 {/* Menu icon and Search icon */}
@@ -134,7 +143,7 @@ function Header(props) {
                 <div className="nav__right__icons">
                     <ul>
                         <li onClick={() => setShowCart(true)}><i className="fa-solid fa-bag-shopping"></i></li>
-                        <li onClick={() => setShowLogin(true)} className='user-icon'><i className="fa-solid fa-user"></i></li>
+                        <li onClick={() => setShowLoginOrUser(true)} className='user-icon'><i className="fa-solid fa-user"></i></li>
                     </ul>
                 </div>
             </nav>

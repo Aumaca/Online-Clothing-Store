@@ -8,7 +8,7 @@ import Footer from "./Footer";
 
 function Home(props) {
     // User Data
-    const userData = props.userData
+    const { userData } = props;
 
     // Loading
     const [isLoading, setIsLoading] = useState(true);
@@ -80,7 +80,7 @@ function Home(props) {
     if (!isLoading) {
         return (
             <>
-                <Header messages={messages} categories={categories} />
+                <Header messages={messages} categories={categories} userData={userData} />
                 <main>
                     <Carousel slides={slides} />
                     <HomeCards homeCards={homeCards} />

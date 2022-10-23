@@ -11,7 +11,7 @@ require('dotenv').config();
 
 
 function App() {
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState(false);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_BASEURL}/api/user/me/`, { withCredentials: true })

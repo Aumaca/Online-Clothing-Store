@@ -1,0 +1,61 @@
+.user__background {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(25, 25, 25, 0.75);
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    top: 0;
+}
+
+.user__background.active {
+    display: flex;
+}
+
+.user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.user__container {
+    top: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    overflow: auto;
+}
+
+.user__header {
+    background-color: #191919;
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.user__header {
+    justify-content: space-between;
+}
+
+.user__header .left {
+    cursor: pointer;
+}
+
+.user__header * {
+    margin-left: auto;
+}
+
+@media screen and (min-width: 992px) {
+
+    .user__container {
+        height: 80vh;
+        width: 35%;
+        top: 8%;
+    }
+}
