@@ -117,12 +117,14 @@ class Register(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
 
     return {
-        'refresh': str(refresh),
-        'access': str(refresh.access_token),
+        settings.SIMPLE_JWT['AUTH_COOKIE_KEY_REFRESH']: str(refresh),
+        settings.SIMPLE_JWT['AUTH_COOKIE_KEY_ACCESS']: str(refresh.access_token),
     }
 
 
@@ -143,9 +145,10 @@ class Login(APIView):
             if user.is_active:
                 tokens = get_tokens_for_user(user)
                 # Access token
+                AUTH_COOKIE_KEY_ACCESS = settings.SIMPLE_JWT['AUTH_COOKIE_KEY_ACCESS']
                 response.set_cookie(
-                    key=settings.SIMPLE_JWT['AUTH_COOKIE_KEY_ACCESS'],
-                    value=tokens['access'],
+                    key=AUTH_COOKIE_KEY_ACCESS,
+                    value=tokens[AUTH_COOKIE_KEY_ACCESS],
                     expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
                     secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
                     httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
@@ -153,9 +156,10 @@ class Login(APIView):
                     path=settings.SIMPLE_JWT['AUTH_COOKIE_PATH'],
                 )
                 # Refresh token
+                AUTH_COOKIE_KEY_REFRESH = settings.SIMPLE_JWT['AUTH_COOKIE_KEY_REFRESH']
                 response.set_cookie(
-                    key=settings.SIMPLE_JWT['AUTH_COOKIE_KEY_REFRESH'],
-                    value=tokens['refresh'],
+                    key=AUTH_COOKIE_KEY_REFRESH,
+                    value=tokens[AUTH_COOKIE_KEY_REFRESH],
                     expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
                     secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
                     httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
