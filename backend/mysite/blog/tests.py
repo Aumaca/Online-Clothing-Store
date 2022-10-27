@@ -37,7 +37,7 @@ class RegisterAccountTest(TestCase):
 
         request = {"first_name": first_name, "last_name": last_name, "email": email,
                    "password": password, "password_confirmation": password_confirmation}
-        url = '/api/validation-to-register/'
+        url = '/api/user/register/'
         response = self.client.post(url, request)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -54,7 +54,7 @@ class RegisterAccountTest(TestCase):
 
         data = {"first_name": first_name, "last_name": last_name, "email": email,
                 "password": password, "password_confirmation": password_confirmation}
-        url = '/api/validation-to-register/'
+        url = '/api/user/register/'
 
         response = self.client.post(url, data)
 
@@ -86,11 +86,10 @@ class LoginAccountTest(TestCase):
             "email": self.user_data["email"],
             "password": self.user_data["password"],
         }
-        url = '/api/token/get-pair/'
+        url = '/api/user/login/'
 
-        response = self.client.post(url, data)
-        result = json.loads(response.content)
-        self.assertTrue("access" in result)
+        result = json.loads(self.client.post(url, data).content)
+        self.assertTrue("Login was successful" in result["Message"])
 
     def test_invalid_login(self):
         '''
@@ -100,11 +99,9 @@ class LoginAccountTest(TestCase):
         password = 'james123'
 
         data = {"email": email, "password": password}
-        url = '/api/token/get-pair/'
+        url = '/api/user/login/'
 
         response = self.client.post(url, data)
-
-        print(response.content)
 
         self.assertEqual(response.status_code,
                          status.HTTP_401_UNAUTHORIZED)

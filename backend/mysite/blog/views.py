@@ -166,7 +166,7 @@ class Login(APIView):
                     samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'],
                     path=settings.SIMPLE_JWT['AUTH_COOKIE_PATH'],
                 )
-                response.data = {"Message": "Login was successfully"}
+                response.data = {"Message": "Login was successful"}
                 return response
             else:
                 return Response({"Message": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
