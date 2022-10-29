@@ -51,6 +51,101 @@
     margin-left: auto;
 }
 
+.user__info {
+    margin: 2rem;
+}
+
+.user__info__data {
+    margin-bottom: 5rem;
+}
+
+.user__info__title {
+    color: rgb(175, 175, 175);
+}
+
+.user__info__subtitle {
+    margin: 10px 0px 20px 20px;
+}
+
+.user__carousel {
+    margin-top: 2rem;
+    width: 100%;
+    height: 30rem;
+    position: relative;
+}
+
+.user__carousel__container {
+    overflow-x: auto;
+    display: flex;
+    padding: 0 4vw;
+    width: 100%;
+}
+
+.user__carousel__left__button,
+.user__carousel__right__button {
+    position: absolute;
+    padding: 15px;
+    margin: 0 5px;
+    top: 80px;
+    display: flex;
+    cursor: pointer;
+    z-index: 1;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.user__carousel__left__button img,
+.user__carousel__right__button img {
+    width: 25px;
+}
+
+.user__carousel__left__button {
+    left: 0;
+    transform: rotate(180deg);
+}
+
+.user__carousel__right__button {
+    right: 0;
+}
+
+.user__carousel__track {
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    width: 1500px;
+    display: flex;
+    gap: 2rem;
+}
+
+.user__carousel__track::-webkit-scrollbar,
+.user__carousel__container::-webkit-scrollbar {
+    display: none;
+}
+
+.user__carousel__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 250px;
+}
+
+.user__carousel__card img {
+    width: 15rem;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 768px) {
+
+    .user__carousel__left__button,
+    .user__carousel__right__button {
+        display: none;
+    }
+
+    .user__carousel__container {
+        padding: 0;
+    }
+}
+
 @media screen and (min-width: 992px) {
 
     .user__container {

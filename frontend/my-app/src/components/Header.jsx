@@ -49,7 +49,6 @@ function Header(props) {
     // If user is logged, User component is returned.
     // If user is not logged, Login component is returned.
     function loginOrUserComponent() {
-        console.log(userData);
         if (userData) {
             let Profile = <User userData={userData} openUser={openLoginOrUser} showUser={showLoginOrUser} />;
             return Profile

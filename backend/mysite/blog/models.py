@@ -146,7 +146,8 @@ class AccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser):
-    email = models.EmailField(max_length=255, unique=True, verbose_name='email')
+    email = models.EmailField(
+        max_length=255, unique=True, verbose_name='email')
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
     date_joined = models.DateTimeField(
@@ -156,7 +157,10 @@ class Account(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    products_in_cart = models.ManyToManyField(Product, default=None)
+    products_in_cart = models.ManyToManyField(
+        Product, default=None, blank=True)
+    last_seen_products = models.ManyToManyField(
+        Product, default=None, related_name='last_seen_products', blank=True)
 
     # Setting email as unique identifier. The field must have 'unique=True'.
     USERNAME_FIELD = 'email'

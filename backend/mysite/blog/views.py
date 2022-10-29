@@ -186,14 +186,21 @@ class User(APIView):
                 user.products_in_cart,
                 many=True
             )
+            last_seen_products_serializer = serializers.ProductSerializer(
+                user.last_seen_products,
+                many=True,
+                context={'request': request}
+            )
             products_in_cart = products_serializer.data
+            last_seen_products = last_seen_products_serializer.data
             user_data = {
                 'email': str(user.email),
                 'first_name': str(user.first_name),
                 'last_name': str(user.last_name),
                 'date_joined': f'{user.date_joined.day}/{user.date_joined.month}/{user.date_joined.year}',
                 # Return just the products id.
-                'products_in_cart': [x["id"] for x in products_in_cart],
+                'products_in_cart': products_in_cart,
+                'last_seen_products': last_seen_products,
             }
             return Response(user_data, status=status.HTTP_200_OK)
         except:

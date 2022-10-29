@@ -31,7 +31,6 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class SlideSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(use_url=True)
 
     class Meta:
         model = models.Slide
@@ -39,7 +38,6 @@ class SlideSerializer(serializers.ModelSerializer):
 
 
 class HomeCardSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(use_url=True)
 
     class Meta:
         model = models.HomeCard
@@ -62,6 +60,10 @@ class NewsletterEmailSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    image1 = serializers.ImageField(use_url=True)
+    image2 = serializers.ImageField(use_url=True)
+    image3 = serializers.ImageField(use_url=True)
+
     class Meta:
         model = models.Product
         fields = '__all__'
