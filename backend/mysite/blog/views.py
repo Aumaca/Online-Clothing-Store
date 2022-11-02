@@ -84,6 +84,27 @@ class ProductList(APIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
+class SearchProductList(APIView):
+    '''
+    Returns just products with the requested type by the slug.
+    '''
+    def get_object(self, slug):
+        try: 
+            return models.Product.objects.filter(type__name=slug)
+        except models.Product.DoesNotExist:
+            return Http404
+
+    def get(self, request, slug, format=None):
+        slug = slug.capitalize() # slug capitalized due to model names being capitalized
+        products = self.get_object(slug)
+        serializer = serializers.ProductSerializer(
+            products,
+            context={'request': request},
+            many=True
+        )
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
 class ProductDetails(APIView):
     def get_object(self, pk):
         try:
@@ -115,8 +136,6 @@ class Register(APIView):
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 def get_tokens_for_user(user):

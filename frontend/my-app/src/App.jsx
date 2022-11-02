@@ -6,6 +6,7 @@ import axios from 'axios';
 import Home from './components/Home';
 import Products from './components/Products';
 import Product from './components/Product';
+import SearchProducts from './components/SearchProducts';
 
 require('dotenv').config();
 
@@ -26,6 +27,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home userData={userData} />} />
                 <Route path="/products" element={<Products userData={userData} />} />
+                <Route path="/search_products/:type" element={<SearchProducts userData={userData} />} />
                 <Route path="/product/:id" element={<Product userData={userData} />} />
             </Routes>
         </CookiesProvider>

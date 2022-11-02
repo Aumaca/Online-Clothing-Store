@@ -53,7 +53,6 @@ class NewsletterEmailSerializer(serializers.ModelSerializer):
         name = data
         for x in name.split(' ')[0:2]:
             if not x.isalpha():
-                print(x)
                 raise serializers.ValidationError('Name is invalid')
         # Return just the first and second name capitalized
         return (" ").join(x.capitalize() for x in name.split(" ")[0:2])
@@ -63,6 +62,7 @@ class ProductSerializer(serializers.ModelSerializer):
     image1 = serializers.ImageField(use_url=True)
     image2 = serializers.ImageField(use_url=True)
     image3 = serializers.ImageField(use_url=True)
+    type = ProductTypeSerializer()
 
     class Meta:
         model = models.Product

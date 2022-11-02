@@ -50,7 +50,7 @@ function Product() {
 
     // Fetch Product
     function fetchProduct() {
-        fetch(`${process.env.REACT_APP_BASEURL}/api/product-details/${id}`)
+        fetch(`${process.env.REACT_APP_BASEURL}/api/product/${id}`)
             .then(response => response.json())
             .then(data => setProduct(data))
             .finally(() => setIsLoadingProduct(false))

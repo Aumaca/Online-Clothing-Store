@@ -23,7 +23,7 @@ class SlideAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'gender', 'id')
+    list_display = ('name', 'price', 'gender', 'id', 'type')
 
 
 class AccountAdmin(admin.ModelAdmin):
