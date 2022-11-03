@@ -13,9 +13,8 @@ function Category(props) {
             </a>
         )
     } else {
-        let href = `${(category.name).toLowerCase()}/`;
         return (
-            <a href={href} className="nav__link">
+            <a href={`/${category.link}`} className="nav__link">
                 <p>{category.name}</p>
             </a>
         )

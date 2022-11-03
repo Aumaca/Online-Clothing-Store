@@ -157,7 +157,7 @@ function Header(props) {
                         )
                     } else {
                         return (
-                            <p key={category.id}>{category.name}</p>
+                            <a href={`/${category.link}`}><p key={category.id}>{category.name}</p></a>
                         )
                     }
                 }
