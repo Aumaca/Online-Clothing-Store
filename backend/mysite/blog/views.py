@@ -79,8 +79,35 @@ class NewsletterEmailCreate(APIView):
 
 class ProductList(APIView):
     def get(self, request, format=None):
+        gender = self.request.query_params.get('gender')
+        type = self.request.query_params.get('type')
+        size = self.request.query_params.get('size').lower()
+
+        qs = models.Product.objects.all()  # Queryset
+
+        if gender:
+            # iexact to case-insentive filter.
+            qs = qs.filter(gender__iexact=gender)
+
+        if type:
+            type_id = models.ProductType.objects.get(
+                name__iexact=type).id  # Getting the type id
+            qs = qs.filter(type=type_id)
+
+        if size:
+            if size == 's':
+                qs = qs.filter(has_small=True)
+            if size == 'm':
+                qs = qs.filter(has_medium=True)
+            if size == 'l':
+                qs = qs.filter(has_large=True)
+
         serializer = serializers.ProductSerializer(
-            models.Product.objects.all(), context={'request': request}, many=True)
+            qs,
+            context={'request': request},   
+            many=True
+        )
+
         return Response(serializer.data, status.HTTP_200_OK)
 
 
@@ -88,14 +115,15 @@ class SearchProductList(APIView):
     '''
     Returns just products with the requested type by the slug.
     '''
+
     def get_object(self, slug):
-        try: 
+        try:
             return models.Product.objects.filter(type__name=slug)
         except models.Product.DoesNotExist:
             return Http404
 
     def get(self, request, slug, format=None):
-        slug = slug.capitalize() # slug capitalized due to model names being capitalized
+        slug = slug.capitalize()  # slug capitalized due to model names being capitalized
         products = self.get_object(slug)
         serializer = serializers.ProductSerializer(
             products,
