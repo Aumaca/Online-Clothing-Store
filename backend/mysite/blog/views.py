@@ -79,22 +79,27 @@ class NewsletterEmailCreate(APIView):
 
 class ProductList(APIView):
     def get(self, request, format=None):
+        # Filters
         gender = self.request.query_params.get('gender')
         type = self.request.query_params.get('type')
-        size = self.request.query_params.get('size').lower()
+        size = self.request.query_params.get('size')
+        infant = self.request.query_params.get('infant')
+        print(gender, type, size, infant)
 
-        qs = models.Product.objects.all()  # Queryset
+        # Queryset
+        qs = models.Product.objects.all()
 
         if gender:
-            # iexact to case-insentive filter.
+            # iexact to case-insentive.
             qs = qs.filter(gender__iexact=gender)
 
         if type:
-            type_id = models.ProductType.objects.get(
-                name__iexact=type).id  # Getting the type id
+            # Getting the type id to filter.
+            type_id = models.ProductType.objects.get(name__iexact=type).id
             qs = qs.filter(type=type_id)
 
         if size:
+            size = size.lower()
             if size == 's':
                 qs = qs.filter(has_small=True)
             if size == 'm':
@@ -102,34 +107,15 @@ class ProductList(APIView):
             if size == 'l':
                 qs = qs.filter(has_large=True)
 
+        if infant == 'true':
+            qs = qs.filter(infant=True)
+
         serializer = serializers.ProductSerializer(
             qs,
-            context={'request': request},   
-            many=True
-        )
-
-        return Response(serializer.data, status.HTTP_200_OK)
-
-
-class SearchProductList(APIView):
-    '''
-    Returns just products with the requested type by the slug.
-    '''
-
-    def get_object(self, slug):
-        try:
-            return models.Product.objects.filter(type__name=slug)
-        except models.Product.DoesNotExist:
-            return Http404
-
-    def get(self, request, slug, format=None):
-        slug = slug.capitalize()  # slug capitalized due to model names being capitalized
-        products = self.get_object(slug)
-        serializer = serializers.ProductSerializer(
-            products,
             context={'request': request},
             many=True
         )
+
         return Response(serializer.data, status.HTTP_200_OK)
 
 

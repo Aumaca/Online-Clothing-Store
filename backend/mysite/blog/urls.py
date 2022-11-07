@@ -20,7 +20,6 @@ urlpatterns = [
     path('api/slides/', views.SlidesList.as_view()),
     path('api/home-cards/', views.HomeCardList.as_view()),
     path('api/products/', views.ProductList.as_view()),
-    path('api/search_products/<slug:slug>/', views.SearchProductList.as_view()),
     path('api/product/<int:pk>/', views.ProductDetails.as_view()),
     path('api/get-items-in-cart-from-account/', views.GetItemsCart.as_view()),
 
