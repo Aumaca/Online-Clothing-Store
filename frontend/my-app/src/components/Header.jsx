@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { redirect } from 'react-router-dom'
+import uuid from 'react-uuid';
 
 import '../styles/Header.css'
 
@@ -93,7 +93,7 @@ function Header(props) {
             categories_with_submenus.push(category); // If category has submenu, is added to the array of categories_with_submenus
             let submenu_index = categories_with_submenus.indexOf(category);
             return (
-                <div key={submenu_index} className={showSubMenu === submenu_index ? "nav__submenu show-submenu" : "nav__submenu"}>
+                <div key={uuid()} className={showSubMenu === submenu_index ? "nav__submenu show-submenu" : "nav__submenu"}>
                     <div className="nav__menu__container">
                         <div className='nav__menu__header'>
                             <i className="fa-solid fa-x" onClick={() => setShowSubMenu(false)}></i>
@@ -103,7 +103,7 @@ function Header(props) {
                         <div className="nav__menu__first">
                             {category.products.map((product) => {
                                 return (
-                                    <a href={product.link} key={product.id} className="nav__link">
+                                    <a href={product.link} key={uuid()} className="nav__link">
                                         <p>{product.name}</p>
                                     </a>
                                 )
@@ -153,11 +153,13 @@ function Header(props) {
                     if (categories_with_submenus.includes(category)) {
                         let index = categories_with_submenus.indexOf(category); // index is the index of the category in the array.
                         return (
-                            <p key={category.id} onClick={() => openSubmenu(index)}>{category.name}</p>
+                            <p key={uuid()} onClick={() => openSubmenu(index)}>{category.name}</p>
                         )
                     } else {
                         return (
-                            <a href={`/${category.link}`}><p key={category.id}>{category.name}</p></a>
+                            <a href={`/${category.link}`} key={uuid()}>
+                                <p>{category.name}</p>
+                            </a>
                         )
                     }
                 }
@@ -191,11 +193,11 @@ function Header(props) {
                             if (categories_with_submenus.includes(category)) {
                                 let index = categories_with_submenus.indexOf(category); // index is the index of the category in the array.
                                 return (
-                                    <Category key={category.id} category={category} logo={LogoRenner} index={index} openSubmenu={openSubmenu} />
+                                    <Category key={uuid()} category={category} logo={LogoRenner} index={index} openSubmenu={openSubmenu} />
                                 )
                             } else {
                                 return (
-                                    <Category key={category.id} category={category} logo={LogoRenner} />
+                                    <Category key={uuid()} category={category} logo={LogoRenner} />
                                 )
                             }
                         }

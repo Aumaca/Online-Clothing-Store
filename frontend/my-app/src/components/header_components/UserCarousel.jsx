@@ -33,7 +33,7 @@ export default function UserCarousel(props) {
                     <img src={Arrow} alt="" />
                 </div>
                 <div className="user__carousel__track" style={{ transform: `translateX(-${150 * amountToMove}px` }}>
-                    {last_seen_products.map((product, index) => {
+                    {last_seen_products.map((product) => {
                         return (
                             <div className="user__carousel__card">
                                 <img src={product.image1} alt="" />

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import axios from 'axios'
+import uuid from 'react-uuid';
 
 import '../styles/Cart.css'
 
@@ -27,7 +28,7 @@ export default function Cart(props) {
             <div className="cart__products__container">
                 {products.map((product) => {
                     return(
-                        <div className="cart__product" key={product.id}>
+                        <div className="cart__product" key={uuid()}>
                             <img src={product.image1} alt="" />
                             <div className="info">
                                 <h1>{product.name}</h1>
