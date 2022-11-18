@@ -42,38 +42,37 @@ function Products() {
     const isLoadingList = [isLoadingMessages, isLoadingCategories, isLoadingProducts];
 
     function forQueryUrl() {
-        function isFirstFilterQuery() {
-            if (urlQuery === '') {
-                return true;
-            }
-            return false;
-        };
-
+        // GENDER FILTER
+        let query = new URLSearchParams(urlQuery);
+        console.log(query);
         if (genderFilter.option) {
-            let gender_option;
-            if (genderFilter.option.toLowerCase() === 'women') {
-                gender_option = 'w';
-            }
-            if (genderFilter.option.toLowerCase() === 'men') {
-                gender_option = 'm';
-            }
-            if (genderFilter.option.toLowerCase() === 'unissex') {
-                gender_option = 'u';
-            }
-
-            if (isFirstFilterQuery) {
-                console.log('firstfilter');
-                setUrlQuery(`?gender=${gender_option}`);
+            if (query.has('gender')) {
+                query.set('gender', genderFilter.option[0]);
+                setUrlQuery(query.toString());
             } else {
-                setUrlQuery(`&gender=${gender_option}`);
+                query.append('gender', genderFilter.option[0]);
+                setUrlQuery(query.toString());
+            }
+        } else {
+            if (query.has('gender')) {
+                query.set('gender', '');
+                setUrlQuery(query.toString());
             }
         };
 
+        // SIZE FILTER
         if (sizeFilter.option) {
-            if (isFirstFilterQuery) {
-                setUrlQuery(`?size=${sizeFilter.option}`);
+            if (query.has('size')) {
+                query.set('size', sizeFilter.option[0]);
+                setUrlQuery(query.toString());
             } else {
-                setUrlQuery(`&size=${sizeFilter.option}`);
+                query.append('size', sizeFilter.option[0]);
+                setUrlQuery(query.toString());
+            }
+        } else {
+            if (query.has('size')) {
+                query.set('size', '');
+                setUrlQuery(query.toString());
             }
         };
     }
@@ -99,7 +98,7 @@ function Products() {
         forQueryUrl();
         let url = `${process.env.REACT_APP_BASEURL}/api/products/`;
         if (urlQuery !== '') {
-            url = `${process.env.REACT_APP_BASEURL}/api/products${urlQuery}`;
+            url = `${process.env.REACT_APP_BASEURL}/api/products?${urlQuery}`;
         }
         console.log(url);
         axios.get(url)
