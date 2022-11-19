@@ -77,6 +77,13 @@ class NewsletterEmailCreate(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+class ProductsType(APIView):
+    def get(self, request):
+        serializer = serializers.ProductTypeSerializer(
+            models.ProductType.objects.all(), many=True)
+        return Response(serializer.data)
+
+
 class ProductList(APIView):
     def get(self, request, format=None):
         # Filters

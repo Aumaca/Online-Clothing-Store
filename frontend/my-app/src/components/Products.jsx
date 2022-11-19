@@ -24,6 +24,11 @@ function Products() {
         option: '',
     });
 
+    const [typeFilter, setTypeFilter] = useState({
+        isOpen: false,
+        option: '',
+    });
+
     // Loading
     const [isLoading, setIsLoading] = useState(true);
 
@@ -35,11 +40,15 @@ function Products() {
     const [categories, setCategories] = useState([]);
     const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
+    // Categories
+    const [productsType, setProductsType] = useState([]);
+    const [isLoadingProductsType, setIsLoadingProductsType] = useState(true);
+
     // Products
     const [products, setProducts] = useState([]);
     const [isLoadingProducts, setIsLoadingProducts] = useState(true);
 
-    const isLoadingList = [isLoadingMessages, isLoadingCategories, isLoadingProducts];
+    const isLoadingList = [isLoadingMessages, isLoadingCategories, isLoadingProducts, isLoadingProductsType];
 
     function forQueryUrl() {
         // GENDER FILTER
@@ -75,6 +84,22 @@ function Products() {
                 setUrlQuery(query.toString());
             }
         };
+
+        // TYPE FILTER
+        if (typeFilter.option) {
+            if (query.has('type')) {
+                query.set('type', typeFilter.option);
+                setUrlQuery(query.toString());
+            } else {
+                query.append('type', typeFilter.option);
+                setUrlQuery(query.toString());
+            }
+        } else {
+            if (query.has('type')) {
+                query.set('type', '');
+                setUrlQuery(query.toString());
+            }
+        };
     }
 
     // Fetch Messages
@@ -93,6 +118,14 @@ function Products() {
             .finally(() => setIsLoadingCategories(false))
     };
 
+    // Fetch products type
+    function fetchProductsType() {
+        let url = `${process.env.REACT_APP_BASEURL}/api/products-type/`;
+        axios.get(url)
+            .then(response => setProductsType(response.data))
+            .finally(() => setIsLoadingProductsType(false))
+    }
+
     // Fetch Product
     function fetchProducts() {
         forQueryUrl();
@@ -110,11 +143,12 @@ function Products() {
         fetchMessages();
         fetchCategories();
         fetchProducts();
+        fetchProductsType();
     }, []);
 
     useEffect(() => {
         forQueryUrl();
-    }, [genderFilter, sizeFilter]);
+    }, [genderFilter, sizeFilter, typeFilter]);
 
     useEffect(() => {
         if (isLoadingList.every(l => l === false)) {
@@ -187,14 +221,25 @@ function Products() {
                             {/* BEGIN FILTER OPTION */}
                             <div className="filter">
                                 <h2>Type:</h2>
-                                <button>
+                                <button onClick={() => typeFilter.isOpen ? setTypeFilter({ ...typeFilter, isOpen: false }) : setTypeFilter({ ...typeFilter, isOpen: true })}>
                                     <div>
-                                        -
+                                        {typeFilter.option ? typeFilter.option : '-'}
                                     </div>
                                     <div>
-                                        <i className="fa-solid fa-chevron-down"></i>
+                                        {typeFilter.isOpen ? <i className="fa-solid fa-chevron-up"></i> : <i className="fa-solid fa-chevron-down"></i>}
                                     </div>
                                 </button>
+                                <div className="dropdown" style={{ display: typeFilter.isOpen ? 'block' : 'none' }}>
+                                    <div className="dropdown list">
+                                        {productsType.map((type) => {
+                                            return(
+                                                <h3 onClick={() => setTypeFilter({ ...typeFilter, option: `${type.name}`, isOpen: false })}>
+                                                    {type.name}
+                                                </h3>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
                             </div>
                             {/* END FILTER OPTION */}
                         </div>
